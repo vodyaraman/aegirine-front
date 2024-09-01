@@ -1,0 +1,13 @@
+---
+const { title = "Создай онлайн меню!", text = "Быстро. Просто. Красиво.", buttonText = "Начнём!" } = Astro.props;
+---
+
+<section>
+    <div class="intro">
+        <h1>{title}</h1>
+        <h2>{text}</h2>
+        <a href="/create">
+            <button >{buttonText}</button>
+        </a>
+    </div>
+</section>

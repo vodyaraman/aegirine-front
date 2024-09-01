@@ -1,0 +1,29 @@
+@keyframes slideInFrom {
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+
+@keyframes animateBodyGradient {
+    0%, 100% {
+        background: radial-gradient(circle, 
+        rgba(20, 20, 20, 0.96) 0%,    
+        rgba(18, 18, 18, 0.96) 10%,  
+        rgba(16, 16, 16, 0.96) 20%,  
+        rgba(14, 14, 14, 0.96) 30%,  
+        rgba(12, 12, 12, 0.96) 40%,  
+        rgba(10, 10, 10, 1) 60%,           
+        rgba(0, 0, 0, 1) 100%);
+    }
+    50% {
+        background: radial-gradient(circle, 
+        rgba(20, 20, 20, 0.96) 0%,    
+        rgba(18, 18, 18, 0.96) 10%,  
+        rgba(16, 16, 16, 0.96) 20%,  
+        rgba(14, 14, 14, 0.96) 30%,  
+        rgba(12, 12, 12, 0.96) 40%,  
+        rgba(10, 10, 10, 1) 70%,           
+        rgba(0, 0, 0, 1) 100%);
+    }
+}

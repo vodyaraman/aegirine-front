@@ -1,0 +1,28 @@
+@import url('./components.scss');
+@import url('./animations.scss');
+@import url('./landing/sections.scss');
+@import url('./create/menu.scss');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700&family=Roboto:wght@400;700&family=Rubik:wght@400;700&family=Playfair+Display:wght@400;700&family=PT+Serif:wght@400;700&display=swap');
+
+div {
+    display: flex;
+}
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-size: 20px;
+    color: rgba(253, 243, 243, 0.904);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(19, 18, 18);
+    z-index: 1;
+}

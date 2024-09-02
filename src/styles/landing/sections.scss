@@ -48,12 +48,13 @@ section {
             border-radius: 20px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.1s ease;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 3px 3px 20px rgba(252, 228, 228, 0.5);
             font-family: "Roboto", sans-serif;
             font-weight: 800;
         }
         
         button:hover {
+            background: linear-gradient(45deg,  #fffdfd, #d4d6da);
             transform: scale(1.05);
         }
         

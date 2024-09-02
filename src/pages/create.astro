@@ -5,7 +5,21 @@ import { Background } from "../components/Background"
 <Head title="Создание меню">
     <div class="create-menu">
         <div class="sidebar">
-            <div class="logo">AEGIRINE</div>
+            <a href="/" draggable="false">
+                <div class="logo">ÆGIRINE</div>
+                <img class="logo-image" src="/createlogo.png" alt="" />
+            </a>
+            <div class="toolbar">
+                <div class="tool">
+                    <img src="/get-link.png" draggable="false"/>
+                </div>
+                <div class="tool">
+                    <img src="/change-background.png" draggable="false"/>
+                </div>
+                <div class="tool">
+                    <img src="/get-qr.png" draggable="false"/>
+                </div>
+            </div>
         </div>
         <Background client:idle/>
     </div>

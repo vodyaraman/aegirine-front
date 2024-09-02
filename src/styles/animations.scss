@@ -27,3 +27,21 @@
         rgba(0, 0, 0, 1) 100%);
     }
 }
+
+@keyframes animate-border {
+    0% {
+        text-shadow: 0 0 2px #ff8000, 0 0 4px #ff8000, 0 0 6px #ff8000,
+                     0 0 8px #80ff00, 0 0 10px #80ff00, 0 0 12px #80ff00,
+                     0 0 14px #80ff00, 0 0 16px #80ff00;
+    }
+    50% {
+        text-shadow: 0 0 2px #80ff00, 0 0 4px #80ff00, 0 0 6px #80ff00,
+                     0 0 8px #ff8000, 0 0 10px #ff8000, 0 0 12px #ff8000,
+                     0 0 14px #ff8000, 0 0 16px #ff8000;
+    }
+    100% {
+        text-shadow: 0 0 2px #ff8000, 0 0 4px #ff8000, 0 0 6px #ff8000,
+                     0 0 8px #80ff00, 0 0 10px #80ff00, 0 0 12px #80ff00,
+                     0 0 14px #80ff00, 0 0 16px #80ff00;
+    }
+}

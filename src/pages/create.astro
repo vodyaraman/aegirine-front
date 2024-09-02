@@ -1,7 +1,11 @@
 ---
-import Head from "../components/head.astro"
-import { Background } from "../components/Background"
+import Head from "../components/head.astro";
+import { Background } from "../components/Background";
+import { GetLink } from "../components/GetLink";
+import { GetBackground } from "../components/GetBackground"
+
 ---
+
 <Head title="Создание меню">
     <div class="create-menu">
         <div class="sidebar">
@@ -10,17 +14,13 @@ import { Background } from "../components/Background"
                 <img class="logo-image" src="/createlogo.png" alt="" />
             </a>
             <div class="toolbar">
+                <GetLink client:load/>
+                <GetBackground client:load/>
                 <div class="tool">
-                    <img src="/get-link.png" draggable="false"/>
-                </div>
-                <div class="tool">
-                    <img src="/change-background.png" draggable="false"/>
-                </div>
-                <div class="tool">
-                    <img src="/get-qr.png" draggable="false"/>
+                    <img src="/get-qr.png" draggable="false" />
                 </div>
             </div>
         </div>
-        <Background client:idle/>
+        <Background client:idle />
     </div>
 </Head>

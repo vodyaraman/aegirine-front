@@ -3,6 +3,7 @@ import Head from "../components/head.astro";
 import { Background } from "../components/Background";
 import { GetLink } from "../components/GetLink";
 import { GetBackground } from "../components/GetBackground"
+import { GetQRCode } from "../components/GetQRCode";
 
 ---
 
@@ -16,9 +17,7 @@ import { GetBackground } from "../components/GetBackground"
             <div class="toolbar">
                 <GetLink client:load/>
                 <GetBackground client:load/>
-                <div class="tool">
-                    <img src="/get-qr.png" draggable="false" />
-                </div>
+                <GetQRCode client:load/>
             </div>
         </div>
         <Background client:idle />

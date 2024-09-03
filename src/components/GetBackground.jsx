@@ -63,13 +63,13 @@ export const GetBackground = () => {
                             className="photo-upload-input"
                             onChange={handleFileInputChange}
                         />
-                        <span className="file-name">{fileName || 'Файл не выбран'}</span> {/* Отображаем имя файла */}
                     </div>
                     {previewSource && (
                         <div className="photo-preview">
                             <img src={previewSource} alt="Preview" className="photo-preview-image" />
                         </div>
                     )}
+                    <span className="file-name">{fileName || 'Файл не выбран'}</span>
                     <button className="photo-upload-button">
                         Загрузить
                     </button>

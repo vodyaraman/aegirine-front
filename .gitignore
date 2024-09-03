@@ -1,4 +1,6 @@
 # build output
+.vscode
+package-lock.json
 dist/
 # generated types
 .astro/
@@ -22,3 +24,4 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+package-lock.json

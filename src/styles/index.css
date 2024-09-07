@@ -11,9 +11,9 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin: ;
     font-size: clamp(16px, 2vw, 24px);
-    color: rgba(253, 243, 243, 0.904);
+    color: rgba(25, 1, 1, 0.988);
 }
 
 body::before {

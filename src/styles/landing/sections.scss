@@ -7,6 +7,8 @@ section {
   width: 100%;
   height: 80vh;
 
+ 
+
   .intro {
     position: relative;
     text-align: center;
@@ -68,14 +70,12 @@ section {
 
 .animated_bounceInLeft {
   z-index: 5;
-
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: #fdd054d7;
   font-family: "Rubik", sans-serif;
   justify-content: flex-start;
-
 }
 
 .container {
@@ -141,4 +141,23 @@ section {
   &.container4 {
     // Особые стили для контейнера 4, если нужно
   }
+} 
+
+footer {
+    z-index: 7;
 }
+
+#slider-element {
+    border-radius: 45%;
+    z-index: 9;
+    position:fixed;
+    top: 50%;
+    right: 0.10rem;
+    width: 1.76rem;
+    height: 5rem;
+    background-color: #d68080;
+    border: 1px solid #ffffff;
+    cursor: move;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+  }

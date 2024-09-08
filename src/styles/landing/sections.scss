@@ -6,9 +6,7 @@ section {
   align-content: center;
   width: 100%;
   height: 80vh;
-
- 
-
+   
   .intro {
     position: relative;
     text-align: center;
@@ -69,8 +67,9 @@ section {
 }
 
 .animated_bounceInLeft {
+  right: 1rem;
   z-index: 5;
-  font-size: 1.1rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: #fdd054d7;
@@ -106,15 +105,6 @@ section {
     font-size: 0.89rem;
     margin-bottom: 0.75rem;
     justify-content: flex-end;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    margin: 20px 0;
-    border-radius: 10px;
-    flex-shrink: 0;
   }
 
   &:hover {
@@ -159,5 +149,131 @@ footer {
     border: 1px solid #ffffff;
     cursor: move;
     flex-direction: column;
-    -webkit-box-orient: vertical;
+    
   }
+
+  #secone {
+    background-color: #890b0b;
+  }
+    
+  #sectwo {
+    background-color: #7a082a;
+  }
+
+  #secthree {
+    background-color: #817746;
+  }
+
+  #secfour {
+    background-color: #51135f;
+  }
+
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700');
+
+body{
+  margin:0;
+  padding:0;
+}
+h1{
+  font-family: 'Montserrat', sans-serif;
+  font-size:45px;
+  font-weight:700;
+  text-align:center;
+  color:#2c3e50;
+}
+h2{
+  font-family: 'Montserrat', sans-serif;
+  font-size:25px;
+  font-weight:400;
+  text-align:center;
+  color:#2c3e50;
+}
+.row{
+  width:100%;
+  height:80vh;
+  padding:0;
+  margin:0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position:relative;
+}
+
+/* -- SVG CSS -- */
+
+.svg-separator{
+  display: block;
+  background: 0 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
+  -webkit-transform: translateY(-100%) translateY(2px);
+  transform: translateY(-100%) translateY(2px);
+  width: 100%;
+}
+.svg-separator.bottom{
+  top: auto;
+  bottom: 0;
+}
+.sep1{
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep2 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep3 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep4 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep5 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep6 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep7 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep8 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep9 {
+  transform: translateY(0%) translateY(-2px) scale(-1,-1);
+  transform-origin: bottom;
+}
+.sep10 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep11 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+.sep12 {
+  transform: translateY(-100%) translateY(2px) scale(1,1);
+  transform-origin: top;
+}
+
+/* -- Row BG Color -- */
+
+.green{background-color:#03a678;}
+.green2{background-color:#1bbc9b;}
+.red{background-color:#d24d57;}
+.light-grey{background-color:#ecf0f1;}
+.light-grey2{background-color:#ecf0f1;}
+.dark-blue{background-color:#22313f;}
+.grey-blue{background-color:#6c7a89;}
+.black{background-color:#333;}
+.stupid-blue{background-color:#19b5fe;}

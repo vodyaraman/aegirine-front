@@ -1,14 +1,15 @@
 ---
 import Intro from "../components/Intro.astro";
 import Head from "../components/head.astro";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 ---
 
 <Head title="Основная страница">
   <h1 class="animated_bounceInLeft">ÆGIRINE</h1>
   <Intro />
+
   <section>
-    <div id="container1" class="container">
+    <div class="container container1">
       <h2>Зачем и кому это нужно?</h2>
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident,
@@ -18,25 +19,26 @@ import Footer from "../components/Footer"
   </section>
 
   <section>
-    <div id="container2" class="container">
+    <div class="container container2">
       <h2>Контейнер 2</h2>
       <p>Контент контейнера 2</p>
     </div>
   </section>
 
   <section>
-    <div id="container3" class="container">
+    <div class="container container3">
       <h2>Контейнер 3</h2>
       <p>Контент контейнера 3</p>
     </div>
   </section>
 
   <section>
-    <div id="container4" class="container">
+    <div class="container container4">
       <h2>Контейнер 4</h2>
       <p>Контент контейнера 4</p>
     </div>
   </section>
 
-  <Footer client:idle/>
+  <Footer client:idle />
 </Head>
+

@@ -1,9 +1,9 @@
 ---
 import Head from "../components/head.astro";
-import { Background } from "../components/Background";
 import { GetLink } from "../components/GetLink";
 import { GetBackground } from "../components/GetBackground"
 import { GetQRCode } from "../components/GetQRCode";
+import MenuEditor from "../components/MenuEditor";
 
 ---
 
@@ -20,6 +20,6 @@ import { GetQRCode } from "../components/GetQRCode";
                 <GetQRCode client:load/>
             </div>
         </div>
-        <Background client:idle />
+        <MenuEditor/>
     </div>
 </Head>

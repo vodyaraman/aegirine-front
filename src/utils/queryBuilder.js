@@ -1,5 +1,5 @@
-import apiService from '../services/ApiService'; // Подключаем API класс
-import jwt from 'jsonwebtoken'; // Для декодирования JWT
+import apiService from "../connection/API/index.js"
+import jwt from 'jsonwebtoken';
 
 class QueryBuilder {
   constructor() {

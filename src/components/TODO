@@ -1,0 +1,23 @@
+    useEffect(() => {
+        async function fetchMenu() {
+            const savedMenu = await queryBuilder.loadMenuFromLocalStorage();
+            if (savedMenu) {
+                setMenuData(savedMenu);
+            }
+        }
+        fetchMenu();
+    }, []);
+
+    <p className="drink-description">
+    <textarea
+        value={drink.description}
+        onChange={(e) => onDrinkChange(index, 'description', e.target.value)}
+        style={{
+            width: '100%',
+            background: 'transparent',
+            border: 'none',
+            outline: 'none',
+            resize: 'none',
+        }}
+    />
+</p>

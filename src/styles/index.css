@@ -4,7 +4,7 @@
 @import url('./create/menu.scss');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700&family=Roboto:wght@400;700&family=Rubik:wght@400;700&family=Playfair+Display:wght@400;700&family=PT+Serif:wght@400;700&display=swap');
 
-div {
+div, p {
     display: flex;
 }
 body {
@@ -30,16 +30,21 @@ body::before {
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #121825;
+    background: #07070821;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #3b77dd;
-    border-radius: 10px;
+    background: linear-gradient(
+        to bottom, 
+        rgba(255, 255, 255, 0) 0%,
+        #c6c6ca 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    border-radius: 20px;
     min-height: 10px;
     max-height: 10px;
 }

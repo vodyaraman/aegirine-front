@@ -105,7 +105,7 @@ const MenuEditor = () => {
                 />
                 <EditDrinks drinks={menuData.drinks} onDrinkChange={handleDrinkChange} />
             </div>
-            <Options />
+            <Options menuData={menuData} setMenuData={setMenuData}/>
         </>
     );
 };

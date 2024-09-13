@@ -1,32 +1,88 @@
 import React, { useState, useEffect } from 'react';
 
-const Options = () => {
-    const [selectedElement, setSelectedElement] = useState(null);  // Хранение данных о выбранном элементе
+const Options = ({ menuData, setMenuData }) => {
+    const [selectedElement, setSelectedElement] = useState(null);
+    const [elementData, setElementData] = useState(null);
+
+    // Словарь для сопоставления классов с контейнерами
+    const classToContainerMap = {
+        'title-input-field': 'title',
+        'size-input-field': 'drink_sizes',
+        'drink-name-input-field': 'drinks',
+    };
+
+    // Словарь для сопоставления контейнеров с данными в menuData
+    const containerToDataMap = {
+        'title': {
+            content: menuData.title.content,
+            font: menuData.title.font,
+            size: menuData.title.size,  // Исправлено на size
+            color: menuData.title.color,
+        },
+        'drink_sizes': menuData.drink_sizes,
+        'drinks': menuData.drinks.map(drink => ({
+            content: drink.content,
+            color: drink.color,
+            font: drink.font,
+            size: drink.size,
+            price: drink.price,
+            backgroundColor: drink.backgroundColor,
+        })),
+    };
+
+    // Функция для маппинга свойств в элемент
+    const mapElementToData = (inputClass) => {
+        const container = classToContainerMap[inputClass];
+        return containerToDataMap[container];
+    };
 
     useEffect(() => {
-        // Функция для обработки кликов
         const handleClick = (event) => {
-            let target = event.target;
+            const target = event.target;
 
-            // Логируем элемент, по которому кликнули (для отладки)
-            console.log("Клик по элементу: ", target);
+            // Найдём ближайший инпут по классу
+            const inputClass = Object.keys(classToContainerMap).find(className =>
+                target.closest(`.${className}`)
+            );
 
-            // Ищем ближайший родительский элемент с нужным классом
-            const closestElement = target.closest('.menu-title, .menu-drink-item, .menu-size, .drink-name-input-field, .size-input-field, .title-input-field');
-            if (closestElement) {
-                setSelectedElement(closestElement);  // Устанавливаем выбранный элемент
-                console.log("Ближайший элемент: ", closestElement);
+            if (inputClass) {
+                const data = mapElementToData(inputClass);
+
+                setSelectedElement(target.closest(`.${inputClass}`)); // Устанавливаем выбранный элемент
+                setElementData(data);  // Устанавливаем данные для отображения
             }
         };
 
-        // Навешиваем слушатель события click
         document.addEventListener('click', handleClick);
 
-        // Чистим слушатели событий при размонтировании компонента
         return () => {
             document.removeEventListener('click', handleClick);
         };
-    }, []);
+    }, [menuData]);
+
+    // Функция для изменения значений в menuData
+    const handleInputChange = (field, value) => {
+        const updatedMenuData = { ...menuData };
+
+        // Если выбран заголовок
+        if (selectedElement && selectedElement.classList.contains('title-input-field')) {
+            updatedMenuData.title[field] = value;  // Исправлено на content и size
+        }
+
+        // Если выбраны размеры напитков
+        if (selectedElement && selectedElement.classList.contains('size-input-field')) {
+            const sizeIndex = [...selectedElement.parentElement.children].indexOf(selectedElement);
+            updatedMenuData.drink_sizes[sizeIndex] = value;
+        }
+
+        // Если выбраны напитки
+        if (selectedElement && selectedElement.classList.contains('drink-name-input-field')) {
+            const drinkIndex = [...selectedElement.parentElement.children].indexOf(selectedElement);
+            updatedMenuData.drinks[drinkIndex][field] = value;
+        }
+
+        setMenuData(updatedMenuData);
+    };
 
     if (!selectedElement) {
         return <div className="options">Нажмите на элемент, чтобы увидеть его настройки</div>;
@@ -36,34 +92,96 @@ const Options = () => {
         <div className="options">
             <h2>Настройки выбранного элемента</h2>
 
-            {/* Пример вывода информации о выбранном элементе */}
-            <div className="options__group">
-                <label>Класс элемента:</label>
-                <span>{selectedElement.className}</span>
-            </div>
-            {selectedElement.value && (
-                <div className="options__group">
-                    <label>Значение инпута:</label>
-                    <span>{selectedElement.value}</span>
-                </div>
+            {/* Настройки для заголовка */}
+            {selectedElement.classList.contains('title-input-field') && (
+                <>
+                    <div className="options__group">
+                        <label>Текст заголовка:</label>
+                        <input
+                            type="text"
+                            value={elementData.content}  // Используем content вместо text
+                            onChange={(e) => handleInputChange('content', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Шрифт заголовка:</label>
+                        <input
+                            type="text"
+                            value={elementData.font}
+                            onChange={(e) => handleInputChange('font', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Размер шрифта:</label>
+                        <input
+                            type="text"
+                            value={elementData.size}  // Используем size вместо fontSize
+                            onChange={(e) => handleInputChange('size', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Цвет заголовка:</label>
+                        <input
+                            type="color"
+                            value={elementData.color}
+                            onChange={(e) => handleInputChange('color', e.target.value)}
+                        />
+                    </div>
+                </>
             )}
-            {selectedElement.style.fontFamily && (
-                <div className="options__group">
-                    <label>Шрифт:</label>
-                    <span>{selectedElement.style.fontFamily}</span>
-                </div>
-            )}
-            {selectedElement.style.fontSize && (
-                <div className="options__group">
-                    <label>Размер шрифта:</label>
-                    <span>{selectedElement.style.fontSize}</span>
-                </div>
-            )}
-            {selectedElement.style.color && (
-                <div className="options__group">
-                    <label>Цвет текста:</label>
-                    <span>{selectedElement.style.color}</span>
-                </div>
+
+            {/* Настройки для напитков */}
+            {selectedElement.classList.contains('drink-name-input-field') && (
+                <>
+                    <div className="options__group">
+                        <label>Название напитка:</label>
+                        <input
+                            type="text"
+                            value={elementData.content}  // Используем content вместо name
+                            onChange={(e) => handleInputChange('content', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Цвет напитка:</label>
+                        <input
+                            type="color"
+                            value={elementData.color}
+                            onChange={(e) => handleInputChange('color', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Шрифт напитка:</label>
+                        <input
+                            type="text"
+                            value={elementData.font}
+                            onChange={(e) => handleInputChange('font', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Размер шрифта:</label>
+                        <input
+                            type="text"
+                            value={elementData.size}
+                            onChange={(e) => handleInputChange('size', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Цена напитка:</label>
+                        <input
+                            type="number"
+                            value={elementData.price}
+                            onChange={(e) => handleInputChange('price', e.target.value)}
+                        />
+                    </div>
+                    <div className="options__group">
+                        <label>Цвет фона напитка:</label>
+                        <input
+                            type="color"
+                            value={elementData.backgroundColor}
+                            onChange={(e) => handleInputChange('backgroundColor', e.target.value)}
+                        />
+                    </div>
+                </>
             )}
         </div>
     );

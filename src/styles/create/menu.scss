@@ -337,6 +337,14 @@
             position: absolute;
             z-index: 3;
             object-fit: cover;
+            background-image: linear-gradient(to left bottom,
+                    #141313 10%,
+                    #18161679 45%,
+                    #554e4e2a 55%,
+                    #181515a2 75%,
+                    #131212 100%);
+            animation: pulse 20s infinite;
+            transform-origin: center;
         }
 
         .menu-title {
@@ -373,7 +381,7 @@
         }
 
         .menu-sizes {
-            display: flex; 
+            display: flex;
             justify-content: center;
             margin-top: 20px;
 
@@ -438,44 +446,264 @@
                 }
             }
         }
+
+        .menu-title-input {
+            z-index: 4;
+
+            input {
+                font-family: 'Rubik', sans-serif;
+                font-size: 1.6em;
+                font-weight: bold;
+                text-align: center;
+                width: 100%;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #333;
+                animation: growFromCenter 0.5s ease-out forwards;
+                transform-origin: center;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+            }
+        }
+
+        .menu-sizes-input {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            margin-left: 30vw;
+            width: 25%;
+            z-index: 6;
+
+            .menu-size-input {
+                position: relative;
+                margin: 0 1px;
+
+                input {
+                    width: auto;
+
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    color: #dfdddd;
+                    background: #5e575796;
+                    border-radius: 25px;
+                    flex: 1;
+                    border: none;
+                    outline: none;
+                    text-align: center;
+                    transition: width 0.3s ease;
+                }                
+            }
+        }
+
+        .menu-drinks-input {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            overflow-y: scroll;
+            margin-bottom: 15vh;
+        
+            .menu-drink-item-input {
+                z-index: 4;
+                display: flex;
+                flex-direction: column; /* Вся карточка будет по вертикали */
+                background: #ffffffcf;
+                padding: 15px;
+                margin-top: 25px;
+                border-radius: 20px;
+                width: 70%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                position: relative;
+                animation: growFromCenter 0.5s ease-out forwards;
+                transform-origin: center;
+                transition: top 0.5s ease, left 0.5s ease;
+        
+                .top-row {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 2rem
+                }
+        
+                .drink-name-input {
+                    flex: 1.8;
+        
+                    input {
+                        font-family: 'Roboto', sans-serif;
+                        font-size: 1.6rem;
+                        font-weight: 600;
+                        color: rgb(46, 39, 3);
+                        background: transparent;
+                        border: none;
+                        outline: none;
+                        width: 100%;
+                    }
+                }
+        
+                .drink-price-input {
+                    flex: 1;
+                    text-align: right;
+        
+                    input {
+                        font-size: 1.6rem;
+                        font-weight: 600;
+                        color: rgb(73, 8, 8);
+                        background: transparent;
+                        border: none;
+                        outline: none;
+                        width: 100%;
+                        text-align: right;
+                    }
+                }
+        
+                .drink-description {
+                    width: 100%;
+                    height: 1rem;
+                    margin: 3px 10px;
+                    
+                    input {
+                        font-family: 'Roboto', sans-serif;
+                        font-size: 1.4rem;
+                        font-weight: 500;
+                        color: rgb(46, 39, 3);
+                        background: transparent;
+                        border: none;
+                        outline: none;
+                        width: 100%;
+                    }
+                }
+            }
+        }        
+
+        .menu-logo-input {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+
+            input {
+                width: 100px;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #fff;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
+
+        .menu-mascot-input {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 5;
+
+            input {
+                width: 100px;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #fff;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
     }
 
-    .title-buttons, .sizes-buttons, .drinks-buttons {
+    .title-buttons,
+    .sizes-buttons,
+    .drinks-buttons {
         display: flex;
         justify-content: space-between;
         margin: 10px 0;
         z-index: 6;
-    
-        .add-button, .remove-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-    
-            &:hover {
-                background-color: #f0f0f0;
-            }
-        }
-    
-        .add-button {
-            background-color: #4caf50;
-            color: white;
-    
-            &:hover {
-                background-color: #45a049;
-            }
-        }
-    
+
+        .add-button,
         .remove-button {
-            background-color: #f44336;
-            color: white;
-    
-            &:hover {
-                background-color: #e53935;
-            }
+            width: 160px;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.9rem;
+            background: linear-gradient(45deg, #e7e7e7, #c0c2c5);
+            color: #1b1b1b;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 3px 3px 20px rgba(252, 228, 228, 0.5);
+            font-family: "Roboto", sans-serif;
+            font-weight: 800;
+            margin: 0px 10px;
+            transition: top 10s ease, left 10s ease;
+        }
+
+        .add-button:hover,
+        .remove-button:hover {
+            background: linear-gradient(45deg, #fffdfd, #d4d6da);
+            transform: scale(1.05);
+        }
+
+        .add-button:active,
+        .remove-button:active {
+            transform: scale(0.9);
+        }
+
+        .add-button {
+            color: #4caf50;
+        }
+
+        .remove-button {
+            color: #f44336;
         }
     }
+
+    .options {
+        padding: 20px;
+        background-color: transparent;
+        border-left: 1px solid rgba(240, 234, 234, 0.089);
+        max-width: 14%;
+        flex-direction: column;
     
+        h2 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+    
+        &__group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+    
+            label {
+                font-size: 1rem;
+                font-weight: 500;
+                width: 120px;
+                margin-right: 10px;
+            }
+    
+            span {
+                font-size: 1rem;
+            }
+    
+            & .options__color-box {
+                width: 20px;
+                height: 20px;
+                border: 1px solid #000;
+                margin-right: 5px;
+            }
+        }
+    }    
 }

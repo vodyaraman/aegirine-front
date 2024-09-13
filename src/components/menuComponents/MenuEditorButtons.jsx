@@ -1,47 +1,59 @@
 import React from 'react';
 
-const ActionButtons = ({ condition, onAdd, onRemove, addLabel, removeLabel, className }) => (
+const ActionButtons = ({ condition, maxReached, onAdd, onRemove, addLabel, removeLabel, className }) => (
     <div className={className}>
-        {condition ? (
-            <>
-                <button className="add-button" onClick={onAdd}>{addLabel}</button>
-                <button className="remove-button" onClick={onRemove}>{removeLabel}</button>
-            </>
-        ) : (
-            <button className="add-button" onClick={onAdd}>{addLabel}</button>
-        )}
+        {!maxReached && <button className="add-button" onClick={onAdd}>{addLabel}</button>}
+        {condition && <button className="remove-button" onClick={onRemove}>{removeLabel}</button>}
     </div>
 );
 
-export const TitleButtons = ({ title, onAddTitle, onRemoveTitle }) => (
-    <ActionButtons
-        condition={title.text}
-        onAdd={onAddTitle}
-        onRemove={onRemoveTitle}
-        addLabel="Изменить тайтл"
-        removeLabel="Очистить тайтл"
-        className="title-buttons"
-    />
-);
+export const TitleButtons = ({ title, showTitle, onAddTitle, onRemoveTitle }) => {
+    const handleAddTitle = () => {
+        if (!showTitle) {
+            onAddTitle();
+        }
+    };
 
-export const SizesButtons = ({ drinkSizes, onAddSize, onRemoveSize }) => (
-    <ActionButtons
-        condition={drinkSizes.length > 0}
-        onAdd={onAddSize}
-        onRemove={onRemoveSize}
-        addLabel="Добавить размер напитка"
-        removeLabel="Убрать последний размер"
-        className="sizes-buttons"
-    />
-);
+    const handleRemoveTitle = () => {
+        if (showTitle) {
+            onRemoveTitle();
+        }
+    };
+
+    return (
+        <div className="title-buttons">
+            {!showTitle ? (
+                <button className="add-button" onClick={handleAddTitle}>Добавить тайтл</button>
+            ) : (
+                <button className="remove-button" onClick={handleRemoveTitle}>Удалить тайтл</button>
+            )}
+        </div>
+    );
+};
+
+export const SizesButtons = ({ drinkSizes, onAddSize, onRemoveSize }) => {
+    const maxSizes = 5;
+    return (
+        <ActionButtons
+            condition={drinkSizes.length > 0}
+            maxReached={drinkSizes.length >= maxSizes}
+            onAdd={onAddSize}
+            onRemove={onRemoveSize}
+            addLabel="Добавить размер"
+            removeLabel="Удалить размер"
+            className="sizes-buttons"
+        />
+    );
+};
 
 export const DrinksButtons = ({ drinks, onAddDrink, onRemoveDrink }) => (
     <ActionButtons
         condition={drinks.length > 0}
+        maxReached={false}
         onAdd={onAddDrink}
         onRemove={onRemoveDrink}
         addLabel="Добавить напиток"
-        removeLabel="Убрать последний напиток"
+        removeLabel="Удалить напиток"
         className="drinks-buttons"
     />
 );

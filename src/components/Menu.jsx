@@ -4,26 +4,26 @@ import { Background } from './Background';
 const ClientMenu = () => {
     const defaultMenuData = {
         title: {
-            content: 'Новый тайтл',
-            font: 'Rubik',
-            size: '2.5rem',
-            color: '#faeee6',
+            content: '',
+            font: '',
+            size: '',
+            color: '',
         },
-        showTitle: true,
-        drink_sizes: ['S', 'M', 'L'],
+        showTitle: false,
+        drink_sizes: [],
         drinks: [
             {
-                content: 'Имбирный чапалах',
-                price: 270,
-                description: 'Острый, как чапалах!',
-                font: 'Roboto',
-                size: '1.5rem',
-                color: '#333333',
-                backgroundColor: '#ffffffcf',
+                content: '',
+                price: 0,
+                description: '',
+                font: '',
+                size: '',
+                color: '',
+                backgroundColor: '',
             },
         ],
-        imageId: 'logo123',
-        mascotId: 'mascot123',
+        imageId: '',
+        mascotId: '',
         backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',
     };
 

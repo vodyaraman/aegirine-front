@@ -1,15 +1,10 @@
-import apiService from "../connection/API/index.js"
-import jwt from 'jsonwebtoken';
+import apiService from "../connection/API/index.js";
+import {jwtDecode} from 'jwt-decode';
 
 class QueryBuilder {
   constructor() {
-    this.tokenKey = 'jwtToken'; // Ключ для хранения JWT-токена
+    this.tokenKey = 'authToken'; // Ключ для хранения JWT-токена
     this.menuKey = 'savedMenu'; // Ключ для хранения данных меню в localStorage
-  }
-
-  // Проверка наличия токена в localStorage
-  hasToken() {
-    return !!localStorage.getItem(this.tokenKey);
   }
 
   // Получение токена из localStorage
@@ -22,11 +17,6 @@ class QueryBuilder {
     localStorage.setItem(this.tokenKey, token);
   }
 
-  // Удаление токена из localStorage
-  removeToken() {
-    localStorage.removeItem(this.tokenKey);
-  }
-
   // Декодирование JWT и получение connectionId
   decodeToken() {
     const token = this.getToken();
@@ -35,8 +25,8 @@ class QueryBuilder {
     }
 
     try {
-      const decoded = jwt.decode(token); // Расшифровываем токен
-      return decoded.connectionId; // Возвращаем connectionId из токена
+      const decoded = jwtDecode(token);
+      return decoded.connectionId;
     } catch (error) {
       console.error('Ошибка декодирования JWT:', error);
       return null;
@@ -52,13 +42,12 @@ class QueryBuilder {
     }
 
     try {
-      // Создаем новую ссылку через API (например, первый раз)
       const connectionId = 'menu123'; // Пример connectionId
       const clientUrl = 'https://example.com/menu123'; // Пример URL
       const response = await apiService.createClientLink(connectionId, clientUrl);
 
       // Получаем токен из ответа и сохраняем его
-      const token = response.jwtToken; // Предположительно, сервер возвращает JWT-токен
+      const token = response.jwtToken;
       this.setToken(token);
       apiService.setToken(token);
       console.log('Проект успешно инициализирован.');
@@ -67,16 +56,30 @@ class QueryBuilder {
     }
   }
 
-  // Метод для создания запроса на создание меню
-  buildCreateMenuRequest({ title, drinkSizes, drinks, imageId, logoId, mascotId }) {
-    return {
-      title,
-      drink_sizes: drinkSizes || [],
-      drinks: drinks || [],
-      imageId,
-      logoId,
-      mascotId,
-    };
+  // Создание или обновление меню
+  async saveMenu(menuData) {
+    const token = this.getToken(); // Получаем токен для заголовка
+    if (!token) {
+      throw new Error('Не удалось получить токен для сохранения меню');
+    }
+
+    try {
+      console.log('Сохраняем меню...');
+
+      // Отправляем PUT запрос на /update с заголовком Authorization
+      const response = await apiService.updateMenu(menuData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+
+      console.log('Меню успешно обновлено.');
+      return response;
+    } catch (error) {
+      console.error('Ошибка при сохранении меню:', error);
+      throw error;
+    }
   }
 
   // Метод для сохранения меню в localStorage
@@ -91,20 +94,24 @@ class QueryBuilder {
   }
 
   // Обновление данных меню из базы данных
-  async updateMenu(menuId) {
+  async updateMenu() {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Не удалось получить токен для обновления меню');
+    }
+
     try {
-      const menuData = await apiService.getMenu(menuId);
+      const menuData = await apiService.getMenu(null, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       this.saveMenuToLocalStorage(menuData);
       console.log('Меню обновлено и загружено в localStorage.');
       return menuData;
     } catch (error) {
       console.error('Ошибка при обновлении меню:', error);
     }
-  }
-
-  // Метод для удаления меню из localStorage (если нужно сбросить)
-  clearMenuFromLocalStorage() {
-    localStorage.removeItem(this.menuKey);
   }
 }
 

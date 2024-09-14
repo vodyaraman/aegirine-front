@@ -53,14 +53,15 @@ class ApiService {
   }
 
   // Обновление меню (update)
-  async updateMenu(menuId, data) {
+  async updateMenu(data, config = {}) {
     try {
-      const response = await this.api.put(`/update/${menuId}`, data);
+      const response = await this.api.put('/update', data, config);
       return response.data;
     } catch (error) {
       this.handleError(error);
     }
   }
+  
 
   // Удаление меню (delete)
   async deleteMenu(menuId) {
@@ -109,4 +110,4 @@ class ApiService {
   }
 }
 
-export default new ApiService('http://localhost:3030'); // Базовый URL API
+export default new ApiService('http://localhost:3030');

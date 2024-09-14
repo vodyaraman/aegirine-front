@@ -2,7 +2,23 @@
 import Head from "../components/head.astro";
 import MenuEditor from "../components/MenuEditor";
 import Toolbar from "../components/Toolbar.astro";
+import queryBuilder from "../utils/queryBuilder"; // Подключаем queryBuilder
 
+let menuData = {};
+
+const initializeMenu = async () => {
+  try {
+    const connectionId = await queryBuilder.initializeProject();
+
+    menuData = await queryBuilder.updateMenu(connectionId);
+  } catch (error) {
+    console.error("Ошибка инициализации меню:", error);
+    menuData = {};
+  }
+};
+
+// Инициализируем меню
+await initializeMenu();
 ---
 
 <Head title="Создание меню">
@@ -10,12 +26,14 @@ import Toolbar from "../components/Toolbar.astro";
         <div class="sidebar">
             <a href="/" draggable="false">
                 <div class="logo">ÆGIRINE</div>
-                <img class="logo-image" src="/createlogo.png" alt="" />
+                <img class="logo-image" src="/createlogo.png" alt="Logo" />
             </a>
             <div class="toolbar">
-                <Toolbar/>
+                <Toolbar />
             </div>
         </div>
-        <MenuEditor client:load/>
+
+        <!-- Передаем загруженные данные меню в компонент MenuEditor -->
+        <MenuEditor client:load />
     </div>
 </Head>

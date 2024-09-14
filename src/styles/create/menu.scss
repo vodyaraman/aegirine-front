@@ -441,10 +441,11 @@
                 background: #ffffffcf;
                 color: currentColor;
                 opacity: 0.7;
-                padding: 3px 15px;
+                padding: 0.5rem 1.3rem;
                 margin-top: 25px;
                 border-radius: 20px;
                 width: 70%;
+                height: 2rem;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 position: relative;
                 animation: growFromCenter 0.5s ease-out forwards;
@@ -456,7 +457,8 @@
                     width: 100%;
                     justify-content: space-between;
                     align-items: center;
-                    height: 2rem
+                    text-align: center;
+                    height: 100%;
                 }
 
                 .drink-name-input {

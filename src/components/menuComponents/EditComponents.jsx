@@ -92,7 +92,7 @@ export const EditDrinks = ({ drinks, onDrinkChange }) => (
                             type="text"
                             value={drink.price}
                             key={index}
-                            onChange={(e) => onDrinkChange(index, 'price', parseFloat(e.target.value))}
+                            onChange={(e) => onDrinkChange(index, 'price', e.target.value)}
                             className="drink-price-input-field"
                         />
                     </p>

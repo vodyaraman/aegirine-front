@@ -4,6 +4,7 @@ import { EditDrinks, EditTitle, EditSizes } from './menuComponents/EditComponent
 import { TitleButtons, SizesButtons, DrinksButtons } from './menuComponents/MenuEditorButtons';
 import Options from './Options';
 import Save from './Save';
+import queryBuilder from '../utils/queryBuilder';
 
 const MenuEditor = () => {
     const defaultMenuData = {
@@ -39,7 +40,6 @@ const MenuEditor = () => {
         return defaultMenuData;
     });
 
-    // Сохраняем изменения в localStorage при изменении menuData
     useEffect(() => {
         if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.setItem('menuData', JSON.stringify(menuData));
@@ -62,12 +62,12 @@ const MenuEditor = () => {
     };
 
     const handleTitleChange = (newContent) => {
-        updateField('title', { ...menuData.title, content: newContent }); // Исправлено text на content
+        updateField('title', { ...menuData.title, content: newContent });
     };
 
     const handleAddTitle = () => {
-        updateField('title', { ...menuData.title, content: 'Новый тайтл' }); // Исправлено text на content
-        updateField('showTitle', true); // Показываем заголовок
+        updateField('title', { ...menuData.title, content: 'Новый тайтл' });
+        updateField('showTitle', true); 
     };
 
     const handleRemoveTitle = () => {
@@ -94,10 +94,15 @@ const MenuEditor = () => {
     };
 
     const handleSave = () => {
-        // Здесь должна быть логика отправки menuData на сервер
-        console.log('Сохраняем меню на сервер...', menuData);
+        queryBuilder.saveMenu(menuData)
+            .then(() => {
+                console.log('Меню успешно сохранено на сервере.');
+            })
+            .catch((error) => {
+                console.error('Ошибка при сохранении меню на сервере:', error);
+            });
     };
-
+    
     return (
         <>
             <div className="menu-editor">

@@ -5,19 +5,21 @@ export const EditTitle = ({ title, onChange }) => (
         className="menu-title-input"
         style={{
             fontFamily: title.font,
-            fontSize: title.fontSize,
+            fontSize: title.size, // Используем корректное поле 'size'
             color: title.color,
+            backgroundColor: title.backgroundColor || 'transparent',  // Если нужен фон
         }}
     >
         <input
             type="text"
-            value={title.text}
+            value={title.content || ""}
             onChange={(e) => onChange(e.target.value)}
             className="title-input-field"
             style={{
                 fontFamily: title.font,
-                fontSize: title.fontSize,
+                fontSize: title.size, // Используем корректное поле 'size'
                 color: title.color,
+                backgroundColor: title.backgroundColor || 'transparent', // Добавляем фон, если есть
             }}
         />
     </div>
@@ -63,32 +65,43 @@ export const EditDrinks = ({ drinks, onDrinkChange }) => (
             <div
                 className="menu-drink-item-input"
                 key={index}
-                style={{ backgroundColor: drink.backgroundColor }}
+                style={{
+                    backgroundColor: drink.backgroundColor || 'transparent', // Проверка на существование
+                    color: drink.color || 'inherit', // Проверка на существование
+                    fontFamily: drink.font || 'inherit', // Шрифт
+                    fontSize: drink.size || 'inherit', // Размер шрифта
+                }}
             >
-                {/* Строка для названия и цены */}
                 <div className="top-row">
                     <h3 className="drink-name-input">
                         <input
                             type="text"
-                            value={drink.name}
-                            onChange={(e) => onDrinkChange(index, 'name', e.target.value)}
+                            value={drink.content || ""}
+                            key={index}
+                            onChange={(e) => onDrinkChange(index, 'content', e.target.value)}  // Исправлено на 'content'
                             className="drink-name-input-field"
+                            style={{
+                                color: drink.color || 'inherit', // Передача стиля цвета
+                                fontFamily: drink.font || 'inherit', // Передача шрифта
+                                fontSize: drink.size || 'inherit', // Передача размера шрифта
+                            }}
                         />
                     </h3>
                     <p className="drink-price-input">
                         <input
                             type="text"
                             value={drink.price}
-                            onChange={(e) => onDrinkChange(index, 'price', e.target.value)}
+                            key={index}
+                            onChange={(e) => onDrinkChange(index, 'price', parseFloat(e.target.value))}
                             className="drink-price-input-field"
                         />
                     </p>
                 </div>
 
-                {/* Описание напитка, если оно не пустое */}
                 {drink.description && (
                     <p className="drink-description">
                         <input
+                            type="text"
                             value={drink.description}
                             onChange={(e) => onDrinkChange(index, 'description', e.target.value)}
                             className="drink-description-input"

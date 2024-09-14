@@ -7,18 +7,21 @@ import Options from './Options';
 const MenuEditor = () => {
     const [menuData, setMenuData] = useState({
         title: {
-            text: '',
+            content: 'Новый тайтл',
             font: 'Rubik',
-            fontSize: '35px',
+            size: '2.5rem',
             color: '#faeee6',
         },
-        showTitle: true, // Управление видимостью заголовка
-        drink_sizes: ['Маленький', 'Средний', 'Большой'],
+        showTitle: true,
+        drink_sizes: ['S', 'M', 'L'],
         drinks: [
             {
-                name: 'Имбирный чай',
+                content: 'Имбирный чапалах',
                 price: 270,
                 description: '',
+                font: 'Roboto',
+                size: '1.5rem',
+                color: '#333333',
                 backgroundColor: '#ffffffcf',
             },
         ],
@@ -42,19 +45,25 @@ const MenuEditor = () => {
         updateField(field, menuData[field].filter((_, i) => i !== index));
     };
 
-    const handleTitleChange = (newText) => {
-        updateField('title', { ...menuData.title, text: newText });
+    const handleTitleChange = (newContent) => {
+        updateField('title', { ...menuData.title, content: newContent }); // Исправлено text на content
     };
 
     const handleAddTitle = () => {
-        updateField('title', { ...menuData.title, text: 'Новый тайтл' });
+        updateField('title', { ...menuData.title, content: 'Новый тайтл' }); // Исправлено text на content
         updateField('showTitle', true); // Показываем заголовок
     };
 
     const handleRemoveTitle = () => {
-        updateField('title', { ...menuData.title, text: '' });
-        updateField('showTitle', false); // Скрываем заголовок
-    };
+        updateField('title', {
+            content: '',
+            font: 'Rubik',
+            size: '35px',
+            color: '#faeee6',
+            backgroundColor: '',
+        });
+        updateField('showTitle', false);
+    };    
 
     const handleSizeChange = (index, newSize) => {
         const updatedSizes = [...menuData.drink_sizes];
@@ -95,9 +104,12 @@ const MenuEditor = () => {
                     drinks={menuData.drinks}
                     onAddDrink={() =>
                         handleAdd('drinks', {
-                            name: 'Новый напиток',
+                            content: 'Новый напиток',  // Исправлено на content
                             price: 200,
                             description: '',
+                            font: 'Arial',  // Добавлено поле font для соответствия структуре
+                            size: '16px',  // Добавлено поле size
+                            color: '#333333',  // Добавлено поле color
                             backgroundColor: '#ffffffcf',
                         })
                     }
@@ -105,7 +117,7 @@ const MenuEditor = () => {
                 />
                 <EditDrinks drinks={menuData.drinks} onDrinkChange={handleDrinkChange} />
             </div>
-            <Options menuData={menuData} setMenuData={setMenuData}/>
+            <Options menuData={menuData} setMenuData={setMenuData} />
         </>
     );
 };

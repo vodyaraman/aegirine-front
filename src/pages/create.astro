@@ -1,9 +1,7 @@
 ---
 import Head from "../components/head.astro";
-import { GetLink } from "../components/GetLink";
-import { GetBackground } from "../components/GetBackground"
-import { GetQRCode } from "../components/GetQRCode";
 import MenuEditor from "../components/MenuEditor";
+import Toolbar from "../components/Toolbar.astro";
 
 ---
 
@@ -15,9 +13,7 @@ import MenuEditor from "../components/MenuEditor";
                 <img class="logo-image" src="/createlogo.png" alt="" />
             </a>
             <div class="toolbar">
-                <GetLink client:load/>
-                <GetBackground client:load/>
-                <GetQRCode client:load/>
+                <Toolbar/>
             </div>
         </div>
         <MenuEditor client:load/>

@@ -2,6 +2,7 @@
 @import url('./animations.scss');
 @import url('./landing/sections.scss');
 @import url('./create/menu.scss');
+@import url('./client/client.scss');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700&family=Roboto:wght@400;700&family=Rubik:wght@400;700&family=Playfair+Display:wght@400;700&family=PT+Serif:wght@400;700&display=swap');
 
 div, p {

@@ -1,0 +1,85 @@
+.client-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-width: 600px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+
+    .background-image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 3;
+        object-fit: cover;
+        background-image: linear-gradient(to left bottom,
+                #141313 10%,
+                #18161679 45%,
+                #554e4e2a 55%,
+                #181515a2 75%,
+                #131212 100%);
+        animation: pulse 20s infinite;
+        transform-origin: center;
+    }
+
+    .client-menu-title {
+        font-family: 'Rubik', sans-serif;
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .client-menu-drinks {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        overflow-y: auto;
+        margin: 10vh;
+
+        .client-menu-drink-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 0 15px;
+            margin-top: 25px;
+            border-radius: 20px;
+            width: 70%;
+            min-height: 8vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+
+            .drink-name {
+                font-family: 'Roboto', sans-serif;
+                font-size: 1.6rem;
+                margin: 0;
+                flex: 8;
+                text-align: left;
+                font-weight: 600;
+                color: rgb(46, 39, 3);
+            }
+
+            .drink-description {
+                font-size: 16px;
+                color: #666;
+            }
+
+            .drink-price {
+                justify-content: flex-end;
+                font-size: 1.6rem;
+                font-weight: 600;
+                margin: 0;
+                flex: 1;
+                color: rgb(73, 8, 8);
+            }
+        }
+    }
+}

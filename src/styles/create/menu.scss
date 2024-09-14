@@ -375,106 +375,6 @@
             transform-origin: center;
         }
 
-        .menu-title {
-            font-family: 'Rubik', sans-serif;
-            font-size: 1.6em;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-            z-index: 4;
-        }
-
-        .menu-logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 5;
-
-            img {
-                width: 100px;
-                height: auto;
-            }
-        }
-
-        .menu-mascot {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 5;
-
-            img {
-                width: 100px;
-                height: auto;
-            }
-        }
-
-        .menu-sizes {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-
-            .menu-size {
-                margin: 0 10px;
-                font-size: 1rem;
-                font-weight: bold;
-                color: #333;
-            }
-        }
-
-        .menu-drinks {
-            position: relative;
-            z-index: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            overflow-y: scroll;
-            color: rgba(53, 32, 2, 0.979);
-            margin: 10vh;
-
-            .menu-drink-item {
-                z-index: 4;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background: rgba(255, 255, 255, 0.7);
-                padding: 0 15px;
-                margin-top: 25px;
-                border-radius: 20px;
-                width: 70%;
-                min-height: 8vh;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                position: relative;
-
-                .drink-name {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 1.6rem;
-                    margin: 0;
-                    flex: 8;
-                    text-align: left;
-                    font-weight: 600;
-                    color: rgb(46, 39, 3);
-                }
-
-                .drink-description {
-                    font-size: 16px;
-                    color: #666;
-                }
-
-                .drink-price {
-                    justify-content: flex-end;
-                    text-wrap: nowrap;
-                    font-size: 1.6rem;
-                    font-weight: 600;
-                    margin: 0;
-                    flex: 1;
-                    color: rgb(73, 8, 8);
-                    border-radius: 13%;
-                }
-            }
-        }
-
         .menu-title-input {
             z-index: 4;
 
@@ -541,7 +441,7 @@
                 background: #ffffffcf;
                 color: currentColor;
                 opacity: 0.7;
-                padding: 15px;
+                padding: 3px 15px;
                 margin-top: 25px;
                 border-radius: 20px;
                 width: 70%;
@@ -712,7 +612,7 @@
         font-size: 1rem;
 
         h2 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             margin-bottom: 20px;
         }
 
@@ -727,26 +627,29 @@
             margin-bottom: 10px;
 
             label {
-                font-size: 1rem;
+                font-size: 0.8rem;
                 font-weight: 500;
                 margin-bottom: 5px;
             }
 
             input {
+                color: #f0e6e6b0;
                 font-family: "Roboto", sans-serif;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 font-weight: 400;
                 padding: 5px;
-                font-size: 1rem;
-                border: 1px solid #ccc;
+                border: 0px solid transparent;
                 border-radius: 4px;
                 margin-bottom: 10px;
                 width: 100%;
+                background-color: transparent;
+                
             }
 
             input[type="color"] {
-                width: 50px;
-                height: 50px;
+                border-radius: 25px;
+                width: 30px;
+                height: 30px;
                 padding: 0;
             }
 
@@ -760,6 +663,54 @@
                 -webkit-appearance: none;
                 margin: 0;
             }
+        }
+    }
+    .save-notification {
+        position: fixed;
+        bottom: 2vh;
+        left: 1vw;
+        width: 300px;
+        height: 2.5rem;
+        background-color: #1b1b1b;
+        color: rgb(233, 228, 228);
+        font-size: 1rem;
+
+        text-align: center;
+        justify-content: space-around;
+        align-items: center;
+
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-100%);
+        animation: slideUp 0.5s forwards;
+        border-radius: 10px;
+    
+        p {
+            margin-right: 5px;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+    
+        .save-button {
+            padding: 0.3rem 0.5rem;
+            margin-right: 4px;
+            font-size: 0.8rem;
+            background: linear-gradient(45deg, #e7e7e7, #c0c2c5);
+            color: #1b1b1b;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            font-family: "Roboto", sans-serif;
+            font-weight: 700;
+        }
+
+        .save-button:hover {
+            transform: scale(1.05);
+        }
+
+        .save-button:active {
+            transform: scale(0.9);
         }
     }
 }

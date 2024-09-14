@@ -2,7 +2,7 @@
     position: relative;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     min-width: 600px;
     height: 100vh;
     display: flex;
@@ -22,63 +22,129 @@
                 #554e4e2a 55%,
                 #181515a2 75%,
                 #131212 100%);
-        animation: pulse 20s infinite;
+        animation: pulse 50s infinite;
         transform-origin: center;
     }
 
-    .client-menu-title {
-        font-family: 'Rubik', sans-serif;
-        font-size: 2em;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .client-menu-drinks {
+    .client-menu-frame {
         position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
         width: 100%;
-        overflow-y: auto;
-        margin: 10vh;
+        height: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 6;
 
-        .client-menu-drink-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 0 15px;
-            margin-top: 25px;
-            border-radius: 20px;
-            width: 70%;
-            min-height: 8vh;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .client-menu-logo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
+
+        .client-menu-mascot {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 5;
+
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
+
+        .client-menu-title {
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            justify-content: center;
+            width: 100%;
+            margin: 3rem 0;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            animation: growFromCenter 0.5s ease-out forwards;
+            transform-origin: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+            z-index: 4;
+        }
+
+        .client-menu-sizes {
             position: relative;
+            margin-bottom: calc(-1rem);
+            right: 14.5%;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
 
-            .drink-name {
-                font-family: 'Roboto', sans-serif;
-                font-size: 1.6rem;
-                margin: 0;
-                flex: 8;
-                text-align: left;
-                font-weight: 600;
-                color: rgb(46, 39, 3);
+            .client-menu-size {
+                font-size: 1.5rem;
+                padding: 0 0.7rem;
+                margin: 0 5px;
+                font-weight: bold;
+                color: #dfdddd;
+                background: #5e575796;
+                border-radius: 25px;
+                border: none;
+                outline: none;
+                text-align: center;
+                transition: width 0.3s ease;
             }
+        }
 
-            .drink-description {
-                font-size: 16px;
-                color: #666;
-            }
+        .client-menu-drinks {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            overflow-y: scroll;
+            color: rgba(53, 32, 2, 0.979);
 
-            .drink-price {
-                justify-content: flex-end;
-                font-size: 1.6rem;
-                font-weight: 600;
-                margin: 0;
-                flex: 1;
-                color: rgb(73, 8, 8);
+            .client-menu-drink-item {
+                z-index: 4;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.7);
+                padding: 0 15px;
+                margin-top: 25px;
+                border-radius: 20px;
+                width: 70%;
+                min-height: 8vh;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                position: relative;
+
+                .client-drink-name {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 1.6rem;
+                    margin: 0;
+                    flex: 8;
+                    text-align: left;
+                    font-weight: 600;
+                    color: rgb(46, 39, 3);
+                }
+
+                .client-drink-price {
+                    justify-content: flex-end;
+                    text-wrap: nowrap;
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    margin: 0;
+                    flex: 1;
+                    color: rgb(73, 8, 8);
+                    border-radius: 13%;
+                }
             }
         }
     }

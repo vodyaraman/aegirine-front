@@ -1,34 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Background } from './Background';
 import { EditDrinks, EditTitle, EditSizes } from './menuComponents/EditComponents';
 import { TitleButtons, SizesButtons, DrinksButtons } from './menuComponents/MenuEditorButtons';
 import Options from './Options';
+import Save from './Save';
 
 const MenuEditor = () => {
-    const [menuData, setMenuData] = useState({
+    const defaultMenuData = {
         title: {
-            content: 'Новый тайтл',
-            font: 'Rubik',
-            size: '2.5rem',
-            color: '#faeee6',
+            content: '',
+            font: '',
+            size: '',
+            color: '',
         },
-        showTitle: true,
-        drink_sizes: ['S', 'M', 'L'],
+        showTitle: false,
+        drink_sizes: [],
         drinks: [
             {
-                content: 'Имбирный чапалах',
-                price: 270,
+                content: '',
+                price: 0,
                 description: '',
-                font: 'Roboto',
-                size: '1.5rem',
-                color: '#333333',
-                backgroundColor: '#ffffffcf',
+                font: '',
+                size: '',
+                color: '',
+                backgroundColor: '',
             },
         ],
-        imageId: 'logo123',
-        mascotId: 'mascot123',
+        imageId: '',
+        mascotId: '',
         backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',
+    };
+
+    const [menuData, setMenuData] = useState(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const savedData = localStorage.getItem('menuData');
+            return savedData ? JSON.parse(savedData) : defaultMenuData;
+        }
+        return defaultMenuData;
     });
+
+    // Сохраняем изменения в localStorage при изменении menuData
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('menuData', JSON.stringify(menuData));
+        }
+    }, [menuData]);
 
     const updateField = (field, updatedValue) => {
         setMenuData(prev => ({
@@ -77,10 +93,15 @@ const MenuEditor = () => {
         updateField('drinks', updatedDrinks);
     };
 
+    const handleSave = () => {
+        // Здесь должна быть логика отправки menuData на сервер
+        console.log('Сохраняем меню на сервер...', menuData);
+    };
+
     return (
         <>
             <div className="menu-editor">
-                <Background image={menuData.backgroundImage} />
+            <Background image={menuData.backgroundImage} />
 
                 <TitleButtons
                     title={menuData.title}
@@ -107,8 +128,8 @@ const MenuEditor = () => {
                             content: 'Новый напиток',  // Исправлено на content
                             price: 200,
                             description: '',
-                            font: 'Arial',  // Добавлено поле font для соответствия структуре
-                            size: '16px',  // Добавлено поле size
+                            font: 'Roboto',  // Добавлено поле font для соответствия структуре
+                            size: '1.5rem',  // Добавлено поле size
                             color: '#333333',  // Добавлено поле color
                             backgroundColor: '#ffffffcf',
                         })
@@ -118,6 +139,7 @@ const MenuEditor = () => {
                 <EditDrinks drinks={menuData.drinks} onDrinkChange={handleDrinkChange} />
             </div>
             <Options menuData={menuData} setMenuData={setMenuData} />
+            <Save menuData={menuData} onSave={handleSave} />
         </>
     );
 };

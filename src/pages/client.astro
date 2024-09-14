@@ -1,13 +1,10 @@
 ---
-import { Background } from "../components/Background";
 import Head from "../components/head.astro";
+import ClientMenu from "../components/Menu";
 ---
 
 <Head title="Меню">
     <div class="client-menu">
-        <Background
-            image={"https://cdn.tripster.ru/thumbs2/b22f400c-f10e-11ee-9a9b-62c2dd8526f6.1220x600.jpeg"}
-            client:load
-        />
+        <ClientMenu client:load/>
     </div>
 </Head>

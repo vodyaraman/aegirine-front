@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import queryBuilder from '../../utils/queryBuilder';
 
 export const GetBackground = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [previewSource, setPreviewSource] = useState('');
     const [fileName, setFileName] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);  // Добавляем состояние для выбранного файла
+    const [uploading, setUploading] = useState(false); // Добавляем состояние для отслеживания загрузки
     const containerRef = useRef(null);
 
     const handleGetPhotoClick = () => {
@@ -36,6 +39,7 @@ export const GetBackground = () => {
         const file = event.target.files[0];
         if (file) {
             setFileName(file.name); // Устанавливаем имя файла в состояние
+            setSelectedFile(file);  // Устанавливаем выбранный файл в состояние
             previewFile(file);
         }
     };
@@ -46,6 +50,26 @@ export const GetBackground = () => {
         reader.onloadend = () => {
             setPreviewSource(reader.result);
         };
+    };
+
+    const handleUpload = async () => {
+        if (!selectedFile) {
+            return alert('Сначала выберите файл!');
+        }
+
+        setUploading(true);
+
+        try {
+            // Отправляем изображение через QueryBuilder
+            const imageId = `background_${Date.now()}`;  // Пример генерации imageId
+            await queryBuilder.uploadImage(selectedFile, imageId, 'Background image');
+        } catch (error) {
+            console.error('Ошибка при загрузке изображения:', error);
+            alert('Ошибка при загрузке изображения');
+        } finally {
+            setUploading(false);
+            setIsVisible(false);  // Закрываем окно после загрузки
+        }
     };
 
     return (
@@ -70,8 +94,12 @@ export const GetBackground = () => {
                         </div>
                     )}
                     <span className="file-name">{fileName || 'Файл не выбран'}</span>
-                    <button className="photo-upload-button">
-                        Загрузить
+                    <button
+                        className="photo-upload-button"
+                        onClick={handleUpload}
+                        disabled={uploading}
+                    >
+                        {uploading ? 'Загрузка...' : 'Загрузить'}
                     </button>
                 </div>
             )}

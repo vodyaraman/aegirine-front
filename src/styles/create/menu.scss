@@ -18,6 +18,7 @@
         height: 100%;
         border-right: 1px solid rgba(240, 234, 234, 0.089);
         box-sizing: border-box;
+        z-index: 10;
 
         a {
             display: flex;

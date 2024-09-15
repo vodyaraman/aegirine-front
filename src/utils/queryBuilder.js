@@ -113,6 +113,7 @@ class QueryBuilder {
       console.error('Ошибка при обновлении меню:', error);
     }
   }
+
   async getMenu() {
     const token = this.getToken();  // Получаем токен из localStorage через queryBuilder
 
@@ -130,6 +131,78 @@ class QueryBuilder {
       return response;
     } catch (error) {
       console.error('Ошибка при получении меню:', error);
+      throw error;
+    }
+  }
+
+  async uploadImage(imageFile, imageId, description = '') {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Не удалось получить токен для загрузки изображения');
+    }
+  
+    try {
+      // Создаем объект FormData
+      const formData = new FormData();
+      formData.append('image', imageFile); // Добавляем файл изображения
+      formData.append('imageId', imageId); // Добавляем imageId
+      formData.append('description', description); // Добавляем описание
+  
+      // Отправляем FormData через API
+      const response = await apiService.uploadImage(formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data' // Указываем корректный Content-Type
+        }
+      });
+  
+      console.log('Изображение успешно загружено.');
+      return response;
+    } catch (error) {
+      console.error('Ошибка при загрузке изображения:', error);
+      throw error;
+    }
+  }  
+
+  // Получение изображения
+  async getImage(imageId) {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Не удалось получить токен для получения изображения');
+    }
+
+    try {
+      const response = await apiService.getImage(imageId, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      return response;
+    } catch (error) {
+      console.error('Ошибка при получении изображения:', error);
+      throw error;
+    }
+  }
+
+  // Удаление изображения
+  async deleteImage(imageId) {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Не удалось получить токен для удаления изображения');
+    }
+
+    try {
+      const response = await apiService.deleteImage(imageId, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      console.log('Изображение успешно удалено.');
+      return response;
+    } catch (error) {
+      console.error('Ошибка при удалении изображения:', error);
       throw error;
     }
   }

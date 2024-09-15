@@ -62,7 +62,6 @@ class ApiService {
     }
   }
 
-
   // Удаление меню (delete)
   async deleteMenu(menuId) {
     try {
@@ -83,18 +82,31 @@ class ApiService {
     }
   }
 
-
   // Загрузка изображения
-  async uploadImage(imageData) {
+  async uploadImage(formData, config) {
     try {
-      const formData = new FormData();
-      formData.append('image', imageData);
+      // Отправляем FormData через POST-запрос
+      const response = await this.api.post('/images', formData, config);
+      return response.data;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }  
 
-      const response = await this.api.post('/images', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+  // Получение изображения
+  async getImage(imageId) {
+    try {
+      const response = await this.api.get(`/images/${imageId}`);
+      return response.data;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  // Удаление изображения
+  async deleteImage(imageId) {
+    try {
+      const response = await this.api.delete(`/images/${imageId}`);
       return response.data;
     } catch (error) {
       this.handleError(error);

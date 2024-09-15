@@ -8,7 +8,7 @@ export const OpenLink = ({ link = "http://localhost:4321/client" }) => {
 
     return (
         <div className="tool link" onClick={handleOpen}>
-            <img src="/open-link.png" draggable="false" alt="Open Link" />
+            <img src="/open-window.png" draggable="false" alt="Open Link" />
         </div>
     );
 };

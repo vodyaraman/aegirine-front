@@ -1,5 +1,5 @@
 import apiService from "../connection/API/index.js";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 class QueryBuilder {
   constructor() {
@@ -111,6 +111,26 @@ class QueryBuilder {
       return menuData;
     } catch (error) {
       console.error('Ошибка при обновлении меню:', error);
+    }
+  }
+  async getMenu() {
+    const token = this.getToken();  // Получаем токен из localStorage через queryBuilder
+
+    if (!token) {
+      throw new Error('Токен не найден');
+    }
+
+    try {
+      const response = await apiService.getMenu({
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      return response;
+    } catch (error) {
+      console.error('Ошибка при получении меню:', error);
+      throw error;
     }
   }
 }

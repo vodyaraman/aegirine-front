@@ -61,7 +61,7 @@ class ApiService {
       this.handleError(error);
     }
   }
-  
+
 
   // Удаление меню (delete)
   async deleteMenu(menuId) {
@@ -74,14 +74,15 @@ class ApiService {
   }
 
   // Получение данных меню
-  async getMenu(menuId) {
+  async getMenu(config) {
     try {
-      const response = await this.api.get(`/menu/${menuId}`);
+      const response = await this.api.get(`/menu`, config); // config передается с заголовками
       return response.data;
     } catch (error) {
       this.handleError(error);
     }
   }
+
 
   // Загрузка изображения
   async uploadImage(imageData) {

@@ -16,17 +16,7 @@ const MenuEditor = () => {
         },
         showTitle: false,
         drink_sizes: [],
-        drinks: [
-            {
-                content: '',
-                price: 0,
-                description: '',
-                font: '',
-                size: '',
-                color: '',
-                backgroundColor: '',
-            },
-        ],
+        drinks: [],
         imageId: '',
         mascotId: '',
         backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',

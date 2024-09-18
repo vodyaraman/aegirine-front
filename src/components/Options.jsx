@@ -218,7 +218,6 @@ const Options = ({ menuData, setMenuData }) => {
                 <InputField
                     key="drink-price"
                     label="Цена напитка"
-                    type="number"
                     value={elementData.price || 0}
                     onChange={(value) => handleInputChange('price', value)}
                 />,

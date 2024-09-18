@@ -1,10 +1,23 @@
 import apiService from "../connection/API/index.js";
 import { jwtDecode } from 'jwt-decode';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'; 
 
 class QueryBuilder {
   constructor() {
     this.tokenKey = 'authToken'; // Ключ для хранения JWT-токена
     this.menuKey = 'savedMenu'; // Ключ для хранения данных меню в localStorage
+
+    // Инициализация S3 клиент для работы с Yandex Object Storage
+    this.s3 = new S3Client({
+      region: 'ru-central1',
+      credentials: {
+        accessKeyId: import.meta.env.PUBLIC_YANDEX_ACCESS_KEY,
+        secretAccessKey: import.meta.env.PUBLIC_YANDEX_SECRET_KEY,
+      },
+      endpoint: 'https://storage.yandexcloud.net',  // Yandex Object Storage endpoint
+      forcePathStyle: true, // Для работы с Yandex Object Storage
+    });
   }
 
   // Получение токена из localStorage
@@ -166,25 +179,27 @@ class QueryBuilder {
 
   // Получение изображения
   async getImage(imageId) {
-    const token = this.getToken();
-    if (!token) {
-      throw new Error('Не удалось получить токен для получения изображения');
-    }
+    const bucketName = 'coffee-menu-images-storage';
+    console.log('Access Key:', import.meta.env.PUBLIC_YANDEX_ACCESS_KEY);
+console.log('Secret Key:', import.meta.env.PUBLIC_YANDEX_SECRET_KEY);
+
 
     try {
-      const response = await apiService.getImage(imageId, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      const command = new GetObjectCommand({
+        Bucket: bucketName,
+        Key: imageId,
       });
 
-      return response;
+      // Генерация временной ссылки на объект (можно настроить время действия)
+      const imageUrl = await getSignedUrl(this.s3, command, { expiresIn: 3600 });
+
+      return imageUrl;  // Возвращаем временную ссылку на изображение
     } catch (error) {
       console.error('Ошибка при получении изображения:', error);
       throw error;
     }
   }
-
+  
   // Удаление изображения
   async deleteImage(imageId) {
     const token = this.getToken();

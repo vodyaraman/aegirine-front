@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^3.6.2",
+    "@aws-sdk/client-s3": "^3.654.0",
+    "@aws-sdk/s3-request-presigner": "^3.654.0",
     "astro": "^4.15.1",
     "axios": "^1.7.7",
     "dompurify": "^3.1.6",

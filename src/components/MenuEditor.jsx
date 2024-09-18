@@ -7,35 +7,41 @@ import Save from './Save';
 import queryBuilder from '../utils/queryBuilder';
 
 const MenuEditor = () => {
-    const defaultMenuData = {
-        title: {
-            content: '',
-            font: '',
-            size: '',
-            color: '',
-        },
-        showTitle: false,
-        drink_sizes: [],
-        drinks: [],
-        imageId: '',
-        mascotId: '',
-        backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',
+    const [menuData, setMenuData] = useState(null); // Изначально пустое состояние меню
+    const [loading, setLoading] = useState(true);   // Состояние загрузки
+
+    // Функция для получения меню
+    const fetchMenuData = async () => {
+        try {
+            const response = await queryBuilder.getMenu();  // Получаем данные с сервера
+            if (response) {
+                setMenuData(response);  // Устанавливаем данные меню из ответа
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    localStorage.setItem('menuData', JSON.stringify(response));  // Сохраняем меню в localStorage
+                }
+            } else {
+                const savedData = localStorage.getItem('menuData');  // Если ответа нет, берём из localStorage
+                if (savedData) {
+                    setMenuData(JSON.parse(savedData));
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка при получении меню:', error);
+            const savedData = localStorage.getItem('menuData');  // В случае ошибки берём из localStorage
+            if (savedData) {
+                setMenuData(JSON.parse(savedData));
+            }
+        } finally {
+            setLoading(false);  // Останавливаем состояние загрузки
+        }
     };
 
-    const [menuData, setMenuData] = useState(() => {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            const savedData = localStorage.getItem('menuData');
-            return savedData ? JSON.parse(savedData) : defaultMenuData;
-        }
-        return defaultMenuData;
-    });
-
+    // useEffect для получения меню при загрузке компонента
     useEffect(() => {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            localStorage.setItem('menuData', JSON.stringify(menuData));
-        }
-    }, [menuData]);
+        fetchMenuData();  // Вызываем функцию для получения меню
+    }, []);
 
+    // Логика обновления поля в menuData
     const updateField = (field, updatedValue) => {
         setMenuData(prev => ({
             ...prev,
@@ -69,7 +75,7 @@ const MenuEditor = () => {
             backgroundColor: '',
         });
         updateField('showTitle', false);
-    };    
+    };
 
     const handleSizeChange = (index, newSize) => {
         const updatedSizes = [...menuData.drink_sizes];
@@ -92,11 +98,21 @@ const MenuEditor = () => {
                 console.error('Ошибка при сохранении меню на сервере:', error);
             });
     };
-    
+
+    // Показываем индикатор загрузки, пока данные меню загружаются
+    if (loading) {
+        return <div>Загрузка меню...</div>;
+    }
+
+    // Если данных меню нет (ни на сервере, ни в localStorage)
+    if (!menuData) {
+        return <div>Нет данных для отображения.</div>;
+    }
+
     return (
         <>
             <div className="menu-editor">
-            <Background image={menuData.backgroundImage} />
+                <Background imageId={menuData.images.backgroundImage.imageId} />
 
                 <TitleButtons
                     title={menuData.title}
@@ -120,12 +136,12 @@ const MenuEditor = () => {
                     drinks={menuData.drinks}
                     onAddDrink={() =>
                         handleAdd('drinks', {
-                            content: 'Новый напиток',  // Исправлено на content
-                            price: 200,
+                            content: 'Новый напиток',
+                            price: '200',
                             description: '',
-                            font: 'Roboto',  // Добавлено поле font для соответствия структуре
-                            size: '1.5rem',  // Добавлено поле size
-                            color: '#333333',  // Добавлено поле color
+                            font: 'Roboto',
+                            size: '1.5rem',
+                            color: '#333333',
                             backgroundColor: '#ffffffcf',
                         })
                     }

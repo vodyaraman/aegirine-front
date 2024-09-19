@@ -5,9 +5,30 @@ import { TitleButtons, SizesButtons, DrinksButtons } from './menuComponents/Menu
 import Options from './Options';
 import Save from './Save';
 import queryBuilder from '../utils/queryBuilder';
+import { eventBus } from '../utils/eventBus';
 
 const MenuEditor = () => {
-    const [menuData, setMenuData] = useState(null); // Изначально пустое состояние меню
+    const defaultMenuData = {
+        title: {
+            content: '',
+            font: '',
+            size: '',
+            color: '',
+        },
+        showTitle: false,
+        drink_sizes: [],
+        drinks: [],
+        imageId: '',
+        mascotId: '',
+        backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',
+    };
+    const [menuData, setMenuData] = useState(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const savedData = localStorage.getItem('menuData');
+            return savedData ? JSON.parse(savedData) : defaultMenuData;
+        }
+        return defaultMenuData;
+    })
     const [loading, setLoading] = useState(true);   // Состояние загрузки
 
     // Функция для получения меню
@@ -63,7 +84,7 @@ const MenuEditor = () => {
 
     const handleAddTitle = () => {
         updateField('title', { ...menuData.title, content: 'Новый тайтл' });
-        updateField('showTitle', true); 
+        updateField('showTitle', true);
     };
 
     const handleRemoveTitle = () => {
@@ -98,6 +119,31 @@ const MenuEditor = () => {
                 console.error('Ошибка при сохранении меню на сервере:', error);
             });
     };
+
+    const handleImageUpload = (event) => {
+        const { imageId, imageUrl } = event.detail; // Получаем imageId и imageUrl из события
+    
+        setMenuData(prev => ({
+            ...prev,
+            images: {
+                ...prev.images,
+                backgroundImage: {  // Обновляем только backgroundImage в правильной структуре
+                    imageId: imageId,
+                    imageUrl: imageUrl
+                }
+            }
+        }));
+    };    
+
+    // Подписка на событие при монтировании компонента
+    useEffect(() => {
+        eventBus.addEventListener('imageUploaded', handleImageUpload);
+
+        return () => {
+            // Удаляем слушатель при размонтировании
+            eventBus.removeEventListener('imageUploaded', handleImageUpload);
+        };
+    }, []);
 
     // Показываем индикатор загрузки, пока данные меню загружаются
     if (loading) {

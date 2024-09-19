@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import queryBuilder from '../../utils/queryBuilder';
+import { eventBus } from '../../utils/eventBus';
 
 export const GetBackground = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -56,21 +57,41 @@ export const GetBackground = () => {
         if (!selectedFile) {
             return alert('Сначала выберите файл!');
         }
-
+    
         setUploading(true);
-
+    
         try {
-            // Отправляем изображение через QueryBuilder
-            const imageId = `background_${Date.now()}`;  // Пример генерации imageId
-            await queryBuilder.uploadImage(selectedFile, imageId, 'Background image');
+            const imageId = `background_${Date.now()}`;
+            const response = await queryBuilder.uploadImage(selectedFile, imageId, 'Background image');
+    
+            // Получаем сохраненные данные из localStorage
+            const savedMenuData = localStorage.getItem('menuData');
+            const menuData = savedMenuData ? JSON.parse(savedMenuData) : {};
+    
+            // Обновляем поле backgroundImage в localStorage
+            const updatedMenuData = {
+                ...menuData,
+                images: {
+                    ...menuData.images,
+                    backgroundImage: {
+                        imageId: response.imageId,
+                        imageUrl: response.url
+                    }
+                }
+            };
+    
+            // Сохраняем обновленные данные в localStorage
+            localStorage.setItem('menuData', JSON.stringify(updatedMenuData));
+    
+            // Отправляем событие после успешной загрузки
+            eventBus.dispatchEvent(new CustomEvent('imageUploaded', { detail: { imageId: response.imageId, imageUrl: response.url } }));
+    
         } catch (error) {
             console.error('Ошибка при загрузке изображения:', error);
-            alert('Ошибка при загрузке изображения');
         } finally {
             setUploading(false);
-            setIsVisible(false);  // Закрываем окно после загрузки
         }
-    };
+    };    
 
     return (
         <>

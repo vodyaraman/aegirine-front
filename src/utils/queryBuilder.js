@@ -53,21 +53,31 @@ class QueryBuilder {
       apiService.setToken(this.getToken()); // Устанавливаем токен для всех запросов
       return;
     }
-
+  
     try {
-      const connectionId = 'menu123'; // Пример connectionId
-      const clientUrl = 'https://example.com/menu123'; // Пример URL
-      const response = await apiService.createClientLink(connectionId, clientUrl);
-
-      // Получаем токен из ответа и сохраняем его
-      const token = response.jwtToken;
-      this.setToken(token);
+      // Получаем токен из LocalStorage или выполняем запрос для получения токена
+      const token = this.getToken();
+  
+      if (!token) {
+        throw new Error('Не удалось получить токен для инициализации проекта.');
+      }
+  
+      // Устанавливаем токен в заголовки API
       apiService.setToken(token);
-      console.log('Проект успешно инициализирован.');
+  
+      const menuData = await apiService.updateMenu({
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      console.log('Меню успешно обновлено:', menuData);
     } catch (error) {
       console.error('Ошибка при инициализации проекта:', error);
     }
   }
+  
 
   // Создание или обновление меню
   async saveMenu(menuData) {

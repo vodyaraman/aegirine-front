@@ -2,22 +2,17 @@
 import Head from "../components/head.astro";
 import MenuEditor from "../components/MenuEditor";
 import Toolbar from "../components/Toolbar.astro";
-import queryBuilder from "../utils/queryBuilder"; // Подключаем queryBuilder
+import queryBuilder from "../utils/queryBuilder";
 
-let menuData = {};
 
 const initializeMenu = async () => {
   try {
-    const connectionId = await queryBuilder.initializeProject();
-
-    menuData = await queryBuilder.updateMenu(connectionId);
+    await queryBuilder.initializeProject();
   } catch (error) {
     console.error("Ошибка инициализации меню:", error);
-    menuData = {};
   }
 };
 
-// Инициализируем меню
 await initializeMenu();
 ---
 
@@ -33,7 +28,6 @@ await initializeMenu();
             </div>
         </div>
 
-        <!-- Передаем загруженные данные меню в компонент MenuEditor -->
         <MenuEditor client:load />
     </div>
 </Head>

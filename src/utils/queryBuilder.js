@@ -183,10 +183,7 @@ class QueryBuilder {
   // Получение изображения
   async getImage(imageId) {
     const bucketName = 'coffee-menu-images-storage';
-    console.log('Access Key:', import.meta.env.PUBLIC_YANDEX_ACCESS_KEY);
-    console.log('Secret Key:', import.meta.env.PUBLIC_YANDEX_SECRET_KEY);
-
-
+    
     try {
       const command = new GetObjectCommand({
         Bucket: bucketName,
@@ -224,6 +221,27 @@ class QueryBuilder {
       throw error;
     }
   }
+
+  async getConnectionLink() {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Токен не найден');
+    }
+
+    try {
+      const response = await apiService.getConnection({
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      return response;  // Возвращаем ответ от эндпоинта
+    } catch (error) {
+      console.error('Ошибка при получении ссылки:', error);
+      throw error;
+    }
+  }
+
 }
 
 export default new QueryBuilder();

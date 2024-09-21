@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import queryBuilder from '../../utils/queryBuilder'; 
 
-export const GetLink = ({ link = "example.com" }) => {
+export const GetLink = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [link, setLink] = useState('');
     const containerRef = useRef(null);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(link);
-        alert('Ссылка скопирована!');
     };
 
     const handleGetLinkClick = () => {
@@ -35,6 +36,19 @@ export const GetLink = ({ link = "example.com" }) => {
         };
     }, [isVisible]);
 
+    useEffect(() => {
+        const fetchLink = async () => {
+            try {
+                const response = await queryBuilder.getConnectionLink(); // Вызов метода из queryBuilder
+                setLink(response.link); // Установка полученной ссылки в состояние
+            } catch (error) {
+                console.error('Ошибка при получении ссылки:', error);
+            }
+        };
+
+        fetchLink();
+    }, []);
+
     return (
         <>
             <div className="tool link" onClick={handleGetLinkClick}>
@@ -56,3 +70,4 @@ export const GetLink = ({ link = "example.com" }) => {
         </>
     );
 };
+

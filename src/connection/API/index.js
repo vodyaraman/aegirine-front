@@ -19,6 +19,15 @@ class ApiService {
     }
   }
 
+  async getConnection(config) {
+    try {
+      const response = await this.api.get('/get-link', config);
+      return response.data;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   // Установка токена в заголовки
   setToken(token) {
     if (token) {

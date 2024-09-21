@@ -39,12 +39,6 @@ const ClientMenu = () => {
         <>
             <Background imageId={menuData.images.backgroundImage.imageId} />
             <div className="client-menu-frame">
-                <div className="client-menu-logo">
-                    <img src={`https://example.com/logos/${menuData.imageId}.png`} alt="Logo" />
-                </div>
-                <div className="client-menu-mascot">
-                    <img src={`https://example.com/mascots/${menuData.mascotId}.png`} alt="Mascot" />
-                </div>
 
                 {menuData.showTitle && (
                     <div

@@ -32,6 +32,25 @@
     }
 }
 
+@keyframes loadButton {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes slideUp {
     from {
         transform: translateY(100%);

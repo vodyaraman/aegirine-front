@@ -105,18 +105,18 @@
                     box-shadow: 3px 3px 20px rgba(36, 35, 35, 0.5);
                     font-family: "Roboto", sans-serif;
                     font-weight: 800;
-            
+
                     img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
                     }
-            
+
                     &:hover {
                         transform: scale(1.1);
                     }
                 }
-            }            
+            }
 
             .get-link-container {
                 z-index: 5;
@@ -148,15 +148,32 @@
                 }
 
                 .get-link-button {
+                    position: relative;
                     padding: 10px 15px;
                     border: none;
+                    width: 100px;
                     border-radius: 5px;
                     background-color: #444;
                     color: #fff;
+                    overflow: hidden;
                     cursor: pointer;
 
                     &:hover {
                         background-color: #666;
+                    }
+
+                    &.copied {
+                        color: #28a745;
+
+                        .progress {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(255, 255, 255, 0.3); // Полупрозрачный белый как индикатор
+                            animation: loadButton 4s linear forwards; // Анимация заполнения
+                        }
                     }
                 }
             }
@@ -246,7 +263,11 @@
                 }
 
 
-                button {
+                .photo-upload-button {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     width: 100px;
                     padding: 0.3rem 0.5rem;
                     font-size: 1rem;
@@ -259,15 +280,30 @@
                     box-shadow: 3px 3px 20px rgba(252, 228, 228, 0.5);
                     font-family: "Roboto", sans-serif;
                     font-weight: 800;
-                }
 
-                button:hover {
-                    background: linear-gradient(45deg, #fffdfd, #d4d6da);
-                    transform: scale(1.05);
-                }
+                    &:hover {
+                        background: linear-gradient(45deg, #fffdfd, #d4d6da);
+                        transform: scale(1.05);
+                    }
 
-                button:active {
-                    transform: scale(0.9);
+                    &:active {
+                        transform: scale(0.9);
+                    }
+
+                    &.uploaded {
+                        color: #28a745;
+
+                        .progress {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 20px;
+                            background-color: rgba(255, 255, 255, 0.3); // Полупрозрачный белый как индикатор
+                            animation: loadButton 4s linear forwards; // Анимация заполнения
+                        }
+                    }
                 }
             }
 
@@ -647,7 +683,7 @@
                 margin-bottom: 10px;
                 width: 100%;
                 background-color: transparent;
-                
+
             }
 
             input[type="color"] {
@@ -669,6 +705,7 @@
             }
         }
     }
+
     .save-notification {
         position: fixed;
         bottom: 2vh;
@@ -688,13 +725,13 @@
         transform: translateY(-100%);
         animation: slideUp 0.5s forwards;
         border-radius: 10px;
-    
+
         p {
             margin-right: 5px;
             font-size: 0.8rem;
             font-weight: 400;
         }
-    
+
         .save-button {
             padding: 0.3rem 0.5rem;
             margin-right: 4px;

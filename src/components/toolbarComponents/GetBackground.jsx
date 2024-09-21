@@ -6,8 +6,9 @@ export const GetBackground = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [previewSource, setPreviewSource] = useState('');
     const [fileName, setFileName] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);  // Добавляем состояние для выбранного файла
-    const [uploading, setUploading] = useState(false); // Добавляем состояние для отслеживания загрузки
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [isUploaded, setIsUploaded] = useState(false);
     const containerRef = useRef(null);
 
     const handleGetPhotoClick = () => {
@@ -39,8 +40,8 @@ export const GetBackground = () => {
     const handleFileInputChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setFileName(file.name); // Устанавливаем имя файла в состояние
-            setSelectedFile(file);  // Устанавливаем выбранный файл в состояние
+            setFileName(file.name);
+            setSelectedFile(file);
             previewFile(file);
         }
     };
@@ -55,20 +56,18 @@ export const GetBackground = () => {
 
     const handleUpload = async () => {
         if (!selectedFile) {
-            return alert('Сначала выберите файл!');
+            return;
         }
-    
+
         setUploading(true);
-    
+
         try {
             const imageId = `background_${Date.now()}`;
             const response = await queryBuilder.uploadImage(selectedFile, imageId, 'Background image');
-    
-            // Получаем сохраненные данные из localStorage
+
             const savedMenuData = localStorage.getItem('menuData');
             const menuData = savedMenuData ? JSON.parse(savedMenuData) : {};
-    
-            // Обновляем поле backgroundImage в localStorage
+
             const updatedMenuData = {
                 ...menuData,
                 images: {
@@ -79,19 +78,26 @@ export const GetBackground = () => {
                     }
                 }
             };
-    
-            // Сохраняем обновленные данные в localStorage
+
             localStorage.setItem('menuData', JSON.stringify(updatedMenuData));
-    
-            // Отправляем событие после успешной загрузки
+
             eventBus.dispatchEvent(new CustomEvent('imageUploaded', { detail: { imageId: response.imageId, imageUrl: response.url } }));
-    
+
+            setIsUploaded(true);
+            setPreviewSource('');
+            setFileName('');
+            setSelectedFile(null);
+
+            setTimeout(() => {
+                setIsVisible(false);
+                setIsUploaded(false);
+            }, 4000);
         } catch (error) {
             console.error('Ошибка при загрузке изображения:', error);
         } finally {
             setUploading(false);
         }
-    };    
+    };
 
     return (
         <>
@@ -115,13 +121,23 @@ export const GetBackground = () => {
                         </div>
                     )}
                     <span className="file-name">{fileName || 'Файл не выбран'}</span>
-                    <button
-                        className="photo-upload-button"
-                        onClick={handleUpload}
-                        disabled={uploading}
-                    >
-                        {uploading ? 'Загрузка...' : 'Загрузить'}
-                    </button>
+
+                    {selectedFile && !isUploaded && (
+                        <button
+                            className="photo-upload-button"
+                            onClick={handleUpload}
+                            disabled={uploading}
+                        >
+                            {uploading ? <div className="cool-spinner"></div> : 'Загрузить'}
+                        </button>
+                    )}
+
+                    {isUploaded && (
+                        <button className="photo-upload-button uploaded">
+                            ✔
+                            <div className="progress"></div>
+                        </button>
+                    )}
                 </div>
             )}
         </>

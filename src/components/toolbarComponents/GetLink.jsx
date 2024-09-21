@@ -4,10 +4,17 @@ import queryBuilder from '../../utils/queryBuilder';
 export const GetLink = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [link, setLink] = useState('');
+    const [isCopied, setIsCopied] = useState(false); // Состояние для отображения галочки
     const containerRef = useRef(null);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(link);
+        setIsCopied(true); // Устанавливаем класс для отображения анимации
+
+        // Возвращаем кнопку в исходное состояние через 4 секунды
+        setTimeout(() => {
+            setIsCopied(false);
+        }, 4000);
     };
 
     const handleGetLinkClick = () => {
@@ -55,19 +62,28 @@ export const GetLink = () => {
                 <img src="/get-link.png" draggable="false" />
             </div>
             {isVisible && (
-                <div ref={containerRef} className={`get-link-container ${isVisible ? '' : 'closed'}`}>
+                <div
+                    ref={containerRef}
+                    className={`get-link-container ${isVisible ? '' : 'closed'} ${isCopied ? 'copied' : ''}`}
+                >
                     <input
                         type="text"
                         value={link}
                         readOnly
                         className="get-link-input"
                     />
-                    <button onClick={handleCopy} className="get-link-button">
-                        Копировать
+                    <button className={`get-link-button ${isCopied ? 'copied' : ''}`} onClick={handleCopy}>
+                        {isCopied ? (
+                            <>
+                                <span className="copy-success">✔</span>
+                                <div className="progress"></div>
+                            </>
+                        ) : (
+                            'Копировать'
+                        )}
                     </button>
                 </div>
             )}
         </>
-    );
+    );    
 };
-

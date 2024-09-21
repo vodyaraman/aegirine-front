@@ -2,18 +2,6 @@
 import Head from "../components/head.astro";
 import MenuEditor from "../components/MenuEditor";
 import Toolbar from "../components/Toolbar.astro";
-import queryBuilder from "../utils/queryBuilder";
-
-
-const initializeMenu = async () => {
-  try {
-    await queryBuilder.initializeProject();
-  } catch (error) {
-    console.error("Ошибка инициализации меню:", error);
-  }
-};
-
-await initializeMenu();
 ---
 
 <Head title="Создание меню">

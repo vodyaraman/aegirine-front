@@ -3,14 +3,11 @@ export const prerender = false;
 ---
 
 <script>
-  // Этот скрипт работает на клиенте после загрузки страницы
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
 
   if (token) {
-    // Сохраняем токен в localStorage
     localStorage.setItem('authToken', token);
-    // Редирект на страницу create
     window.location.href = '/create';
   } else {
     console.error('Token not found in URL');

@@ -1,4 +1,5 @@
 ---
+import CreateButton from './CreateButton';
 const { title = "Создай онлайн меню!", text = "Быстро. Просто. Красиво.", buttonText = "Начнём!" } = Astro.props;
 ---
 
@@ -6,8 +7,7 @@ const { title = "Создай онлайн меню!", text = "Быстро. П�
     <div class="intro">
         <h1>{title}</h1>
         <h2>{text}</h2>
-        <a href="/create">
-            <button >{buttonText}</button>
-        </a>
+        <CreateButton client:idle buttonText={buttonText} />
     </div>
 </section>
+

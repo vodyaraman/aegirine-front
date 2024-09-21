@@ -10,6 +10,15 @@ class ApiService {
     });
   }
 
+  async createConnection(serviceName) {
+    try {
+      const response = await this.api.post('/create', { serviceName });
+      return response.data; // Возвращаем данные ответа
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   // Установка токена в заголовки
   setToken(token) {
     if (token) {
@@ -42,6 +51,15 @@ class ApiService {
     }
   }
 
+  async initializeMenu(config = {}) {
+    try {
+      const response = await this.api.post('/init', {}, config);
+      return response.data;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   // Создание меню (create)
   async createMenu(data) {
     try {
@@ -62,7 +80,7 @@ class ApiService {
     }
   }
 
-  // Удаление меню (delete)
+  // Удаление меню
   async deleteMenu(menuId) {
     try {
       const response = await this.api.delete(`/delete/${menuId}`);
@@ -75,7 +93,7 @@ class ApiService {
   // Получение данных меню
   async getMenu(config) {
     try {
-      const response = await this.api.get(`/menu`, config); // config передается с заголовками
+      const response = await this.api.get(`/menu`, config);
       return response.data;
     } catch (error) {
       this.handleError(error);
@@ -87,26 +105,6 @@ class ApiService {
     try {
       // Отправляем FormData через POST-запрос
       const response = await this.api.post('/images', formData, config);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-    }
-  }  
-
-  // Получение изображения
-  async getImage(imageId) {
-    try {
-      const response = await this.api.get(`/images/${imageId}`);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-    }
-  }
-
-  // Удаление изображения
-  async deleteImage(imageId) {
-    try {
-      const response = await this.api.delete(`/images/${imageId}`);
       return response.data;
     } catch (error) {
       this.handleError(error);

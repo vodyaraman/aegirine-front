@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import queryBuilder from '../utils/queryBuilder';
 
 export const Background = ({ imageId }) => {
-  console.log(imageId)
   const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {

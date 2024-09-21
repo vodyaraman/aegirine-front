@@ -1,6 +1,6 @@
     useEffect(() => {
         async function fetchMenu() {
-            const savedMenu = await queryBuilder.loadMenuFromLocalStorage();
+            const savedMenu = await queryBuilder.loadMenuFromlocalStorage();
             if (savedMenu) {
                 setMenuData(savedMenu);
             }

@@ -8,20 +8,30 @@ import queryBuilder from '../utils/queryBuilder';
 import { eventBus } from '../utils/eventBus';
 
 const MenuEditor = () => {
-    const defaultMenuData = {
+ const defaultMenuData = {
+        menuId: '',  // Уникальный идентификатор меню
         title: {
             content: '',
-            font: '',
+            font: '',  // Можно задать начальные значения для удобства
             size: '',
             color: '',
         },
-        showTitle: false,
-        drink_sizes: [],
-        drinks: [],
-        imageId: '',
-        mascotId: '',
-        backgroundImage: 'https://img.goodfon.ru/original/2560x1600/0/a4/lodka-priroda-peyzazh-ozero.jpg',
+        showTitle: false,  // Логическое значение, показывать ли заголовок
+        drink_sizes: [],  // Массив размеров напитков
+        drinks: [],  // Начальное значение для напитков, которое соответствует схеме
+        images: {
+            backgroundImage: {
+                imageId: '',
+                imageUrl: ''
+            },
+            mascotImage: {
+                imageId: '',
+                imageUrl: ''
+            }
+        },  // Структура для изображений, как в схеме
+        lastUpdated: new Date().toISOString()  // Начальное значение для времени обновления
     };
+    
     const [menuData, setMenuData] = useState(() => {
         if (typeof window !== 'undefined' && window.localStorage) {
             const savedData = localStorage.getItem('menuData');
@@ -34,11 +44,16 @@ const MenuEditor = () => {
     // Функция для получения меню
     const fetchMenuData = async () => {
         try {
-            const response = await queryBuilder.getMenu();  // Получаем данные с сервера
+            const response = await queryBuilder.initializeMenu();  // Получаем данные с сервера
             if (response) {
-                setMenuData(response);  // Устанавливаем данные меню из ответа
+                const updatedMenuData = {
+                    ...defaultMenuData,
+                    ...response,  // Поля из response перезапишут поля defaultMenuData, если они есть
+                };
+    
+                setMenuData(updatedMenuData);  // Устанавливаем данные меню
                 if (typeof window !== 'undefined' && window.localStorage) {
-                    localStorage.setItem('menuData', JSON.stringify(response));  // Сохраняем меню в localStorage
+                    localStorage.setItem('menuData', JSON.stringify(updatedMenuData));  // Сохраняем меню в localStorage
                 }
             } else {
                 const savedData = localStorage.getItem('menuData');  // Если ответа нет, берём из localStorage
@@ -55,11 +70,11 @@ const MenuEditor = () => {
         } finally {
             setLoading(false);  // Останавливаем состояние загрузки
         }
-    };
+    };        
 
     // useEffect для получения меню при загрузке компонента
     useEffect(() => {
-        fetchMenuData();  // Вызываем функцию для получения меню
+        fetchMenuData();
     }, []);
 
     // Логика обновления поля в menuData
@@ -158,7 +173,7 @@ const MenuEditor = () => {
     return (
         <>
             <div className="menu-editor">
-                <Background imageId={menuData.images.backgroundImage.imageId} />
+                <Background imageId={menuData.images?.backgroundImage?.imageId} />
 
                 <TitleButtons
                     title={menuData.title}

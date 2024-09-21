@@ -1,7 +1,7 @@
 import apiService from "../connection/API/index.js";
 import { jwtDecode } from 'jwt-decode';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'; 
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 class QueryBuilder {
   constructor() {
@@ -47,37 +47,30 @@ class QueryBuilder {
   }
 
   // Инициализация проекта (проверка, нужно ли создавать новую ссылку или использовать старую)
-  async initializeProject() {
-    if (this.hasToken()) {
-      console.log('Проект уже инициализирован, используем существующую ссылку.');
-      apiService.setToken(this.getToken()); // Устанавливаем токен для всех запросов
-      return;
+  async initializeMenu() {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Токен не найден');
     }
-  
+
     try {
-      // Получаем токен из LocalStorage или выполняем запрос для получения токена
-      const token = this.getToken();
-  
-      if (!token) {
-        throw new Error('Не удалось получить токен для инициализации проекта.');
-      }
-  
-      // Устанавливаем токен в заголовки API
-      apiService.setToken(token);
-  
-      const menuData = await apiService.updateMenu({
+      // Отправляем запрос на инициализацию меню
+      const response = await apiService.initializeMenu({
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         }
       });
-  
-      console.log('Меню успешно обновлено:', menuData);
+
+      // Если меню успешно инициализировано, возвращаем данные
+      if (response) {
+        console.log('Меню успешно инициализировано:', response);
+        return response;
+      }
     } catch (error) {
-      console.error('Ошибка при инициализации проекта:', error);
+      console.error('Ошибка при инициализации меню:', error);
+      throw error;
     }
   }
-  
 
   // Создание или обновление меню
   async saveMenu(menuData) {
@@ -106,12 +99,12 @@ class QueryBuilder {
   }
 
   // Метод для сохранения меню в localStorage
-  saveMenuToLocalStorage(menuData) {
+  saveMenuTolocalStorage(menuData) {
     localStorage.setItem(this.menuKey, JSON.stringify(menuData));
   }
 
   // Метод для загрузки меню из localStorage
-  loadMenuFromLocalStorage() {
+  loadMenuFromlocalStorage() {
     const savedMenu = localStorage.getItem(this.menuKey);
     return savedMenu ? JSON.parse(savedMenu) : null;
   }
@@ -129,7 +122,7 @@ class QueryBuilder {
           'Authorization': `Bearer ${token}`
         }
       });
-      this.saveMenuToLocalStorage(menuData);
+      this.saveMenuTolocalStorage(menuData);
       console.log('Меню обновлено и загружено в localStorage.');
       return menuData;
     } catch (error) {
@@ -163,14 +156,14 @@ class QueryBuilder {
     if (!token) {
       throw new Error('Не удалось получить токен для загрузки изображения');
     }
-  
+
     try {
       // Создаем объект FormData
       const formData = new FormData();
       formData.append('image', imageFile); // Добавляем файл изображения
       formData.append('imageId', imageId); // Добавляем imageId
       formData.append('description', description); // Добавляем описание
-  
+
       // Отправляем FormData через API
       const response = await apiService.uploadImage(formData, {
         headers: {
@@ -178,20 +171,20 @@ class QueryBuilder {
           'Content-Type': 'multipart/form-data' // Указываем корректный Content-Type
         }
       });
-  
+
       console.log('Изображение успешно загружено.');
       return response;
     } catch (error) {
       console.error('Ошибка при загрузке изображения:', error);
       throw error;
     }
-  }  
+  }
 
   // Получение изображения
   async getImage(imageId) {
     const bucketName = 'coffee-menu-images-storage';
     console.log('Access Key:', import.meta.env.PUBLIC_YANDEX_ACCESS_KEY);
-console.log('Secret Key:', import.meta.env.PUBLIC_YANDEX_SECRET_KEY);
+    console.log('Secret Key:', import.meta.env.PUBLIC_YANDEX_SECRET_KEY);
 
 
     try {
@@ -209,7 +202,7 @@ console.log('Secret Key:', import.meta.env.PUBLIC_YANDEX_SECRET_KEY);
       throw error;
     }
   }
-  
+
   // Удаление изображения
   async deleteImage(imageId) {
     const token = this.getToken();

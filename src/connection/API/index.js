@@ -38,27 +38,14 @@ class ApiService {
   }
 
   // Создание новой ссылки (client-links)
-  async createClientLink(connectionId, clientUrl) {
+  async createClientLink(config = {}) {
     try {
-      const response = await this.api.post('/client-links', {
-        connectionId,
-        clientUrl,
-      });
+      const response = await this.api.post('/client-link', {}, config);
       return response.data;
     } catch (error) {
       this.handleError(error);
     }
-  }
-
-  // Получение ссылки (client-links)
-  async getClientLink(connectionId) {
-    try {
-      const response = await this.api.get(`/client-links/${connectionId}`);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-    }
-  }
+  }  
 
   async initializeMenu(config = {}) {
     try {

@@ -20,7 +20,7 @@ export const Background = ({ imageId }) => {
   }, [imageId]);
 
   if (!imageSrc) {
-    return <div>Загрузка изображения...</div>;
+    return <></>;
   }
 
   return <img className="background-image" src={imageSrc} alt="Background" />;

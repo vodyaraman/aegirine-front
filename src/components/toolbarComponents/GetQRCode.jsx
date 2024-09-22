@@ -1,11 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {QRCodeSVG} from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
+import queryBuilder from '../../utils/queryBuilder';
 
 export const GetQRCode = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [qrValue, setQrValue] = useState('https://example.com');
+    const [qrValue, setQrValue] = useState('');  // Изначально пустое значение для QR-кода
     const containerRef = useRef(null);
     const qrRef = useRef(null);
+
+    const fetchClientLink = async () => {
+        try {
+            const response = await queryBuilder.getClientLink();  // Запрос на получение ссылки от сервера
+            setQrValue(response.clientUrl);  // Устанавливаем полученную ссылку как значение для QR-кода
+        } catch (error) {
+            console.error('Ошибка при получении ссылки:', error);
+        }
+    };
+    // Получаем ссылку от сервера при первом отображении QR-кода
+    useEffect(() => {
+        fetchClientLink();
+    }, []);
 
     const handleGetQRCodeClick = () => {
         setIsVisible(!isVisible);
@@ -33,10 +47,6 @@ export const GetQRCode = () => {
         };
     }, [isVisible]);
 
-    const handleQrValueChange = (event) => {
-        setQrValue(event.target.value);
-    };
-
     const handleDownloadClick = () => {
         const canvas = qrRef.current.querySelector('canvas');
         const pngUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
@@ -55,15 +65,8 @@ export const GetQRCode = () => {
             </div>
             {isVisible && (
                 <div ref={containerRef} className={`qrcode-upload-container ${isVisible ? '' : 'closed'}`}>
-                    <input
-                        type="text"
-                        value={qrValue}
-                        onChange={handleQrValueChange}
-                        className="qrcode-input"
-                        placeholder="Введите текст или URL для генерации QR-кода"
-                    />
                     <div className="qrcode-preview" ref={qrRef}>
-                        <QRCodeSVG value={qrValue} />
+                        {qrValue ? <QRCodeSVG value={qrValue} /> : <div className='cool-spinner white'></div>}  {/* Отображаем QR-код только при наличии ссылки */}
                     </div>
                     <button className="qrcode-upload-button" onClick={handleDownloadClick}>
                         Скачать QR-код

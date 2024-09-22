@@ -183,7 +183,7 @@ class QueryBuilder {
   // Получение изображения
   async getImage(imageId) {
     const bucketName = 'coffee-menu-images-storage';
-    
+
     try {
       const command = new GetObjectCommand({
         Bucket: bucketName,
@@ -242,6 +242,28 @@ class QueryBuilder {
     }
   }
 
+  async getClientLink() {
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('Токен не найден');
+    }
+  
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+  
+      // Вызываем метод createClientLink с переданными заголовками
+      const response = await apiService.createClientLink(config);
+  
+      return response;  // Возвращаем ответ от эндпоинта
+    } catch (error) {
+      console.error('Ошибка при получении ссылки:', error);
+      throw error;
+    }
+  }  
 }
 
 export default new QueryBuilder();

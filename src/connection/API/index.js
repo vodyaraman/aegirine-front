@@ -87,9 +87,9 @@ class ApiService {
   }
 
   // Получение данных меню
-  async getMenu(config) {
+  async getMenu(menuId) {
     try {
-      const response = await this.api.get(`/menu`, config);
+      const response = await this.api.get(`/menu/${menuId}`);
       return response.data;
     } catch (error) {
       this.handleError(error);

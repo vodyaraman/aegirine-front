@@ -130,7 +130,7 @@ class QueryBuilder {
     }
   }
 
-  async getMenu() {
+  async getMenu(menuId) {
     const token = this.getToken();  // Получаем токен из localStorage через queryBuilder
 
     if (!token) {
@@ -138,11 +138,7 @@ class QueryBuilder {
     }
 
     try {
-      const response = await apiService.getMenu({
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await apiService.getMenu(menuId);
 
       return response;
     } catch (error) {

@@ -1,0 +1,25 @@
+---
+import Head from "../components/head.astro";
+import LoadingScreen from "../components/LoadingScreen";
+
+export const prerender = false;
+---
+
+<Head title="Redirecting...">
+    <LoadingScreen client:idle/>
+    <script>
+        if (typeof window !== "undefined") {
+      
+          const params = new URLSearchParams(window.location.search);
+          const menuId = params.get('menuId');
+      
+          if (menuId) {
+            sessionStorage.setItem('menuId', menuId);
+      
+            window.location.href = "/client";
+          } else {
+            console.error('Menu ID not found in URL');
+          }
+        }
+      </script>      
+</Head>

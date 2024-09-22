@@ -10,7 +10,15 @@ const ClientMenu = () => {
     useEffect(() => {
         const loadMenuFromServer = async () => {
             try {
-                const data = await queryBuilder.getMenu();
+                // Получаем menuId из sessionStorage
+                const menuId = sessionStorage.getItem('menuId');
+
+                if (!menuId) {
+                    throw new Error("Menu ID not found in sessionStorage");
+                }
+
+                // Запрашиваем меню с сервера с использованием menuId
+                const data = await queryBuilder.getMenu(menuId);
                 if (data) {
                     setMenuData(data);
                 } else {
@@ -39,7 +47,6 @@ const ClientMenu = () => {
         <>
             <Background imageId={menuData.images.backgroundImage.imageId} />
             <div className="client-menu-frame">
-
                 {menuData.showTitle && (
                     <div
                         className="client-menu-title"

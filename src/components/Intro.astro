@@ -1,13 +1,13 @@
 ---
 import CreateButton from './CreateButton';
-const { title = "Создай онлайн меню!", text = "Быстро. Просто. Красиво.", buttonText = "Начнём!" } = Astro.props;
+const { title = "Создай онлайн меню!", text = "Быстро. Просто. Красиво." } = Astro.props;
 ---
 
 <section>
     <div class="intro">
         <h1>{title}</h1>
         <h2>{text}</h2>
-        <CreateButton client:idle buttonText={buttonText} />
+        <CreateButton client:idle/>
     </div>
 </section>
 

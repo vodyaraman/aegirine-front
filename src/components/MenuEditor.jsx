@@ -6,6 +6,7 @@ import Options from './Options';
 import Save from './Save';
 import queryBuilder from '../utils/queryBuilder';
 import { eventBus } from '../utils/eventBus';
+import LoadingScreen from './LoadingScreen';
 
 const MenuEditor = () => {
  const defaultMenuData = {
@@ -162,7 +163,7 @@ const MenuEditor = () => {
 
     // Показываем индикатор загрузки, пока данные меню загружаются
     if (loading) {
-        return <div>Загрузка меню...</div>;
+        return <LoadingScreen/>;
     }
 
     // Если данных меню нет (ни на сервере, ни в localStorage)

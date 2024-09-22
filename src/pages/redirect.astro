@@ -1,20 +1,22 @@
 ---
+import LoadingScreen from "../components/LoadingScreen";
+import Head from "../components/head.astro";
+
 export const prerender = false;
 ---
 
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
+<Head>
+  <LoadingScreen client:idle/>
 
-  if (token) {
-    localStorage.setItem('authToken', token);
-    window.location.href = '/create';
-  } else {
-    console.error('Token not found in URL');
-  }
-</script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
 
-<div>
-  <h1>Redirecting...</h1>
-</div>
-
+    if (token) {
+      localStorage.setItem("authToken", token);
+      window.location.href = "/create";
+    } else {
+      console.error("Token not found in URL");
+    }
+  </script>
+</Head>

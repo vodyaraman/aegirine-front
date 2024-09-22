@@ -39,6 +39,8 @@ section {
         }
 
         button {
+            display: flex;
+            justify-content: center;
             width: 120px;
             padding: 0.75rem 1.5rem;
             font-size: 1rem;

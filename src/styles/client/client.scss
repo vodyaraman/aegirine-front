@@ -79,7 +79,7 @@
 
         .client-menu-sizes {
             position: relative;
-            margin-bottom: calc(-1rem);
+            margin-bottom: 1rem;
             right: 14.5%;
             width: 100%;
             display: flex;
@@ -110,6 +110,7 @@
             width: 100%;
             overflow-y: scroll;
             color: rgba(53, 32, 2, 0.979);
+            margin-bottom: 11vh;
 
             .client-menu-drink-item {
                 z-index: 4;
@@ -118,10 +119,11 @@
                 align-items: center;
                 background: rgba(255, 255, 255, 0.7);
                 padding: 0 15px;
-                margin-top: 25px;
+                margin-bottom: 1.5rem;
                 border-radius: 20px;
                 width: 70%;
-                min-height: 8vh;
+                min-height: 7vh;
+                height: 3rem;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 position: relative;
 

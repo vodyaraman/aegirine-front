@@ -1,5 +1,6 @@
 @import url('./components.scss');
 @import url('./animations.scss');
+@import url('./media.scss');
 @import url('./landing/sections.scss');
 @import url('./create/menu.scss');
 @import url('./client/client.scss');

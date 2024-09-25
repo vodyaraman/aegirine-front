@@ -107,7 +107,7 @@ const MenuEditor = () => {
         updateField('title', {
             content: '',
             font: 'Rubik',
-            size: '35px',
+            size: '1.6rem',
             color: '#faeee6',
             backgroundColor: '',
         });
@@ -202,7 +202,7 @@ const MenuEditor = () => {
                             price: '200',
                             description: '',
                             font: 'Roboto',
-                            size: '1.5rem',
+                            size: '1rem',
                             color: '#333333',
                             backgroundColor: '#ffffffcf',
                         })

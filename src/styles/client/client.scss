@@ -3,7 +3,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    min-width: 600px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -61,12 +60,12 @@
 
         .client-menu-title {
             font-family: 'Rubik', sans-serif;
-            font-size: 1.6em;
+            font-size: 1.3rem;
             font-weight: bold;
             text-align: center;
             justify-content: center;
-            width: 100%;
-            margin: 3rem 0;
+            width: 90%;
+            margin: 2.5rem 10px;
             background: transparent;
             border: none;
             outline: none;
@@ -80,15 +79,14 @@
         .client-menu-sizes {
             position: relative;
             margin-bottom: 1rem;
-            right: 14.5%;
-            width: 100%;
+            width: 71%;
             display: flex;
             justify-content: flex-end;
 
             .client-menu-size {
-                font-size: 1.5rem;
-                padding: 0 0.7rem;
-                margin: 0 5px;
+                font-size: 0.95rem;
+                padding: 0 0.68rem;
+                margin: 0 0.1rem;
                 font-weight: bold;
                 color: #dfdddd;
                 background: #5e575796;
@@ -113,23 +111,24 @@
             margin-bottom: 11vh;
 
             .client-menu-drink-item {
+                font-family: 'Roboto', sans-serif;
                 z-index: 4;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 background: rgba(255, 255, 255, 0.7);
-                padding: 0 15px;
-                margin-bottom: 1.5rem;
-                border-radius: 20px;
+                padding: 0.8rem 1rem;
+                margin-bottom: 1rem;
+                border-radius: 30px;
                 width: 70%;
-                min-height: 7vh;
-                height: 3rem;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 position: relative;
 
                 .client-drink-name {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 1.6rem;
+                    text-align: center;
+                    justify-content: flex-start;
+                    align-items: center;
+                    font-size: 1rem;
                     margin: 0;
                     flex: 8;
                     text-align: left;
@@ -140,7 +139,7 @@
                 .client-drink-price {
                     justify-content: flex-end;
                     text-wrap: nowrap;
-                    font-size: 1.6rem;
+                    font-size: 1rem;
                     font-weight: 600;
                     margin: 0;
                     flex: 1;

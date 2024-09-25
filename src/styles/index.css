@@ -10,14 +10,14 @@ div, p {
     display: flex;
 }
 body {
+    height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
     margin: 0;
-    font-size: clamp(16px, 2vw, 24px);
     color: rgba(253, 243, 243, 0.904);
 
-    overflow: none;
+    overflow: hidden;
 }
 
 body::before {

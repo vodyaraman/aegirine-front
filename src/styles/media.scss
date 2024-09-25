@@ -1,0 +1,85 @@
+$small-screen: 360px;
+$small-medium-screen: 480px;
+$medium-screen: 768px;
+$medium-large-screen: 1024px;
+$large-screen: 1280px;
+$large-xlarge-screen: 1440px;
+$xlarge-screen: 1600px;
+$xxlarge-screen: 1920px;
+
+@media (max-width: $small-medium-screen) {
+    html {
+        font-size: 12px;
+    }
+
+    .options {
+        display: none;
+    }
+}
+
+@media (min-width: $small-medium-screen) and (max-width: $medium-screen) {
+    html {
+        font-size: 13px;
+    }
+
+    .options {
+        display: none;
+    }
+}
+
+@media (max-width: $medium-screen) and (orientation: portrait) {
+    html {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: $medium-screen) and (max-width: $medium-large-screen) {
+    html {
+        font-size: 16.25px;
+    }
+}
+
+@media (min-width: $medium-large-screen) and (max-width: $large-screen) {
+    html {
+        font-size: 19.5px;
+    }
+}
+
+@media (min-width: $large-screen) and (max-width: $large-xlarge-screen) {
+    html {
+        font-size: 22.75px;
+    }
+}
+
+@media (min-width: $large-xlarge-screen) and (max-width: $xlarge-screen) {
+    html {
+        font-size: 24.7px;
+    }
+}
+
+@media (min-width: $xlarge-screen) and (max-width: $xxlarge-screen) {
+    html {
+        font-size: 26px;
+    }
+}
+
+@media (min-width: $xxlarge-screen) {
+    html {
+        font-size: 29.25px;
+    }
+}
+
+@media print {
+    html {
+        font-size: 16.25px;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .no-print {
+        display: none;
+    }
+}

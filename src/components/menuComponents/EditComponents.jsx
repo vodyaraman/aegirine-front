@@ -31,7 +31,7 @@ export const EditSizes = ({ drinkSizes, onSizeChange }) => {
     const updateInputWidth = (index) => {
         const input = inputRefs.current[index];
         if (input) {
-            input.style.width = `${Math.max(input.value.length * 15, 50)}px`;
+            input.style.width = `${Math.max(input.value.length * 1)}rem`;
         }
     };
 

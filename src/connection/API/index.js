@@ -117,4 +117,4 @@ class ApiService {
   }
 }
 
-export default new ApiService('http://localhost:3030');
+export default new ApiService('http://89.111.170.87:3030');
